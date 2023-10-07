@@ -1,0 +1,2 @@
+class SaleInfo < ApplicationRecord
+end
