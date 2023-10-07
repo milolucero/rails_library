@@ -1,12 +1,9 @@
 class User < ApplicationRecord
   has_many :reviews
+  has_many :books, through: :reviews
 
-  # Validation for presence
   validates :username, :email, :first_name, :last_name, presence: true
-
-  # Validation for uniqueness
-  validates :username, uniqueness: true
-  validates :email, uniqueness: true
+  validates :username, :email, uniqueness: true
 
   # Validation for username format (alphanumeric characters, underscores, and dashes)
   validates :username,
@@ -29,6 +26,6 @@ class User < ApplicationRecord
   def username_cannot_contain_special_characters
     return unless username.present? && username.match(/[^a-zA-Z0-9_-]/)
 
-    errors.add(:username, "can only contain letters, numbers, underscores, and dashes")
+    errors.add(:username, "Can only contain letters, numbers, underscores, and dashes")
   end
 end
