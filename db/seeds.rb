@@ -1,5 +1,8 @@
 require "faker"
 
+# To do: Delete all data from the database
+
+
 dummy_google_data = [
   # Book 1
   {
@@ -259,7 +262,7 @@ review_amount = 200
 review_amount.times do
   Review.create(
     user_id: rand(1..User.count),
-    book_id: rand(1..Book.count), # For testing purposes, make all reviews be about book #1
+    book_id: rand(1..Book.count),
     rating:  rand(1..5),
     comment: Faker::Quotes::Shakespeare.as_you_like_it_quote
   )
