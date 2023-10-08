@@ -19,14 +19,14 @@ end
 
 # Getting data from Google Books API with multiple requests.
 books_requests = [
-  { key_word: "php", number: 10 },
-  { key_word: "java", number: 5 },
-  { key_word: "javascript", number: 8 },
-  { key_word: "C++", number: 12 },
-  { key_word: "C#", number: 20 },
-  { key_word: "ruby", number: 11 },
-  { key_word: "windows", number: 16 },
-  { key_word: "linux", number: 14 }
+  { key_word: "php", number: 40 },
+  { key_word: "java", number: 40 },
+  { key_word: "javascript", number: 40 },
+  { key_word: "C++", number: 40 },
+  { key_word: "C#", number: 40 },
+  { key_word: "ruby", number: 40 },
+  { key_word: "windows", number: 40 },
+  { key_word: "linux", number: 40 }
 ]
 
 books_requests.each do |request|
@@ -40,9 +40,8 @@ books_requests.each do |request|
 
   books_data.each do |element|
     # Publisher
-    publisher = Publisher.find_or_create_by(
-      name: element["volumeInfo"]["publisher"]
-    )
+    publisher_name = element["volumeInfo"]["publisher"]
+    publisher = publisher_name.present? ? Publisher.find_or_create_by(name: publisher_name) : nil
 
     # SaleInfo
     sale_info = SaleInfo.create(
