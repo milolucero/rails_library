@@ -1,0 +1,118 @@
+{
+  "tables": [
+    {
+      "name": "Books",
+      "description": "This table serves as the central repository for book-related details, encompassing essential information such as the book title, publisher ID, publication date, book description, ISBN, page count, language, image links, preview link, sale information, and search-related data. This is considered the main table of the database.",
+      "columns": [
+        "book_id",
+        "title",
+        "publisher_id",
+        "publication_date",
+        "description",
+        "ISBN",
+        "page_count",
+        "language",
+        "image_links",
+        "preview_link",
+        "sale_information",
+        "search_data"
+      ]
+    },
+    {
+      "name": "Publishers",
+      "description": "This table stores the names of publishers associated with the respective books. This table is required for cataloging and referencing books based on their publishers, facilitating efficient organization and retrieval of book-related data.",
+      "columns": [
+        "publisher_id",
+        "name"
+      ]
+    },
+     {
+      "name": "Reviews",
+      "description": "The Reviews table has a specific role: it is designed to store user-generated reviews for books in the database. This table includes important information such as the user's ID, book ID, the rating they assigned to the book, and any comments or feedback they provided.",
+      "columns": [
+        "review_id",
+        "user_id",
+        "book_id",
+        "rating",
+        "comments"
+      ]
+    },
+    {
+      "name": "Users",
+      "description": "The table stores the information about registered users, including their username, email, first and last names. This table is required to keep track of the users who leave reviews on the books.",
+      "columns": [
+        "user_id",
+        "username",
+        "email",
+        "first_name",
+        "last_name"
+      ]
+    },
+    {
+      "name": "Categories",
+      "description": "It serves as a crucial resource for storing information related to the various categories or genres that books belong to.",
+      "columns": [
+        "category_id",
+        "name"
+      ]
+    },
+    {
+      "name": "Authors",
+      "description": "The table represents the names of book authors. This table is integral for associating authors with their respective works and enables users to access information about the authors behind the books stored in the system.",
+      "columns": [
+        "author_id",
+        "name"
+      ]
+    },
+    {
+      "name": "Sale_Infos",
+      "description": "The table contains sale information such as price, currency, and buy link associated with the specific book.",
+      "columns": [
+        "sale_info_id",
+        "book_id",
+        "price",
+        "currency",
+        "buy_link"
+      ]
+    },
+
+    {
+      "name": "Book_Authors",
+      "description": "The table acts as a connecting bridge between the Books and Authors tables, addressing the many-to-many relationship that exists between them.",
+      "columns": [
+        "book_id",
+        "author_id"
+      ]
+    },
+    {
+      "name": "Book_Categories",
+      "description": "The table plays a crucial role in managing the many-to-many association between the Books and Categories tables. It serves as an intermediary or join table that facilitates this complex relationship.",
+      "columns": [
+        "book_id",
+        "category_id"
+      ]
+    }
+  ],
+  "associations":[
+    {
+      "name": "Books - Categories",
+      "description": "This association reflects a many-to-many relationship indicating that a book can be associated with multiple categories, and conversely, a category can be linked to multiple books. To solve this relationship between the Books and Categories tables, we use a join table Book_Categories and Rails has_and_belongs_to_many associations."
+    },
+    {
+      "name":"Books - Authors",
+      "description":"This association represents a many-to-many relationship between Books and Categories tables. It indicates that a book can be written by many authors and an author can write multiple books. To solve this relationship between the tables, we use a join table Book_ Authors and Rails has_and_belongs_to_many associations."
+    },
+      {
+      "name": "Users - Books ",
+      "description":"The association represents a many-many relationships between Users and Books tables using a third table Reviews. It means that a book can have multiple reviews from different users and users can leave reviews on multiple books. However, using Rails asssociation has many :through  Reviews ensures that a user can write only one review on a book. "
+    },
+    {
+      "name": "Books - Publishers",
+      "description":"The association reflects a one-to-many relationship between Books and Publishers tables meaning a single publisher can publish multiple books, but each book is associated with only one publisher."
+    },
+    {
+      "name": "Books - Sale_Infos",
+      "description": "The association reflects a one-to-one relationship between Books and Sales_Infos tables meaning that a book can have only specific sale info. In Rails we use has_one and belongs_to"
+    }
+  ]
+}
