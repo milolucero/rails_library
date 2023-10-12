@@ -1,0 +1,9 @@
+<div class="container">
+  <%= image_tag "#{@book.image_small_thumbnail}" %>
+  <h1 class="title"><%= @book.title %></h1>
+  <h2 class="subtitle is-5">
+    By
+    <%= @book.authors.map{ |author| author.name }.join(", ") %>
+  </h2>
+  <p><%= @book.description %></p>
+</div>

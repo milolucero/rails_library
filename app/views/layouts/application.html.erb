@@ -11,46 +11,45 @@
   </head>
   <body>
     <%# Navbar %>
-    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="">
-          <%= image_tag "bookhub_logo.svg" %>
-        </a>
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item">
-            Home
+    <nav class="navbar is-light is-spaced has-shadow" role="navigation" aria-label="main navigation">
+      <div class="container">
+        <div class="navbar-brand">
+          <%# Logo image %>
+          <%= link_to root_path, class: "navbar-item" do %>
+            <%= image_tag "bookhub_logo.svg" %>
+          <% end %>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
           </a>
-          <a class="navbar-item">
-            Documentation
-          </a>
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              Categories
-            </a>
-            <div class="navbar-dropdown">
-              <% @categories.each do |category| %>
-                <!-- Remove the double quotes on the category path when routes to the categories are implemented -->
-                <%= link_to "#{category.name} (#{category.book_count})", "category_path(category)", class: "navbar-item" %>
-              <% end %>
-            </div>
-          </div>
         </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start ml-4">
+            <%= link_to "Home", root_path, class: "navbar-item" %>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Categories
               </a>
-              <a class="button is-light">
-                Log in
-              </a>
+              <div class="navbar-dropdown">
+                <% @categories.each do |category| %>
+                  <!-- Remove the double quotes on the category path when routes to the categories are implemented -->
+                  <%= link_to "#{category.name} (#{category.book_count})", "category_path(category)", class: "navbar-item" %>
+                <% end %>
+              </div>
+            </div>
+            <%= link_to "About", about_path, class: "navbar-item" %>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <%# <div class="buttons">
+                <a class="button is-primary">
+                  <strong>Sign up</strong>
+                </a>
+                <a class="button is-light">
+                  Log in
+                </a>
+              </div> %>
             </div>
           </div>
         </div>

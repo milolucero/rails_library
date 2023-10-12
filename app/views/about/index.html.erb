@@ -1,56 +1,45 @@
- <h1 class = "title has-text-success has-text-centered is-size-1">About BookHub dataset</h1>
-    <p class= "is-size-5">
-      The BookHub app is built on a structured dataset that includes the following tables:
-    </p>
-    <!-- Tables descriptions -->
-      <div class="columns is-multiline">
-        <% @data['tables'].each do |table| %>
-          <div class="column is-4">
-            <ul class="is-size-5">
-               <li>
-                  <h3 class="title has-text-success has-text-centered"><%= table['name'] %> Table</h3>
-                  <p><%= table['description'] %></p>
-                </li>
-            </ul>
-          </div>
-       <% end %>
-    </div>
-    <!-- Data sources list -->
-    <p class= "is-size-5">
-        This dataset provides an organized way to manage, store, and retrieve book data from two primary sources:
-    </p>
-    <ul class= "is-size-5 has-text-success has-text-weight-bold">
-        <li >Google Books API</li>
-        <li>Faker library to generate fake users and reviews</li>
-    </ul>
-
-    <!-- Dataset ERD -->
-    <div class="has-text-centered">
-        <%= image_tag("erd.png", alt: "erd") %>
-    </div>
-
-    <!-- Association list -->
-     <h2  class = "title has-text-success has-text-centered">Associations between tables</h2>
-           <div class="columns is-multiline">
-        <% @data['associations'].each do |association| %>
-          <div class="column is-4 "> <!-- Use is-4 for 3 columns in one row -->
-            <ul class="is-size-5">
-               <li>
-                  <h3 class="title has-text-success has-text-centered"><%= association['name'] %></h3>
-                  <p><%= association['description'] %></p>
-                </li>
-            </ul>
-          </div>
-       <% end %>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
+<div class="container">
+  <h1 class = "title has-text-success has-text-centered is-size-1">About BookHub dataset</h1>
+  <p class= "is-size-5 has-text-centered">
+    The BookHub app is built on a structured dataset that includes the following tables:
+  </p>
+  <!-- Tables descriptions -->
+  <div class="columns is-multiline">
+    <% @data['tables'].each do |table| %>
+      <div class="column is-4">
+        <ul class="is-size-5">
+          <li>
+            <h3 class="title has-text-success has-text-centered"><%= table['name'] %> Table</h3>
+            <p><%= table['description'] %></p>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+  <!-- Data sources list -->
+  <p class= "is-size-5">
+    This dataset provides an organized way to manage, store, and retrieve book data from two primary sources:
+  </p>
+  <ul class= "is-size-5 has-text-success has-text-weight-bold">
+    <li >Google Books API</li>
+    <li>Faker library to generate fake users and reviews</li>
+  </ul>
+  <!-- Dataset ERD -->
+  <div class="has-text-centered">
+    <%= image_tag("erd.png", alt: "erd") %>
+  </div>
+  <!-- Association list -->
+  <h2  class = "title has-text-success has-text-centered">Associations between tables</h2>
+  <div class="columns is-multiline">
+    <% @data['associations'].each do |association| %>
+      <div class="column is-4 "> <!-- Use is-4 for 3 columns in one row -->
+        <ul class="is-size-5">
+          <li>
+            <h3 class="title has-text-success has-text-centered"><%= association['name'] %></h3>
+            <p><%= association['description'] %></p>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>

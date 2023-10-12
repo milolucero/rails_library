@@ -19,14 +19,20 @@ end
 
 # Getting data from Google Books API with multiple requests.
 books_requests = [
-  { key_word: "php", number: 40 },
-  { key_word: "java", number: 40 },
-  { key_word: "javascript", number: 40 },
-  { key_word: "C++", number: 40 },
-  { key_word: "C#", number: 40 },
-  { key_word: "ruby", number: 40 },
-  { key_word: "windows", number: 40 },
-  { key_word: "linux", number: 40 }
+  # { key_word: "php", number: 40 },
+  # { key_word: "java", number: 40 },
+  # { key_word: "javascript", number: 40 },
+  # { key_word: "C++", number: 40 },
+  # { key_word: "C#", number: 40 },
+  # { key_word: "ruby", number: 40 },
+  # { key_word: "windows", number: 40 },
+  # { key_word: "linux", number: 40 }
+  { key_word: "computers", number: 40 },
+  { key_word: "biography", number: 40 },
+  { key_word: "fiction", number: 40 },
+  { key_word: "education", number: 40 },
+  { key_word: "art", number: 40 },
+  { key_word: "sports", number: 40 }
 ]
 
 books_requests.each do |request|

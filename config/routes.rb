@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
-  get "/about", to: "about#index"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Root
+  root "books#index"
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # Books
+  resources :books, only: [:index, :show]
+
+  # Categories
+  get "/:category", to: "category#index"
+
+  # About
+  get "/about", to: "about#index"
 end
