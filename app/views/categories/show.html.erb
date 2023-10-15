@@ -1,4 +1,13 @@
 <div class="container">
+  <%# Breadcrumb %>
+  <nav class="breadcrumb mt-4 mb-8" aria-label="breadcrumbs">
+    <ul>
+      <li><%= link_to "Books", books_path %></li>
+      <li><%= link_to "Categories", categories_path %></li>
+      <li class="is-active"><a href="#" aria-current="page"><%= @category.name %></a></li>
+    </ul>
+  </nav>
+
   <h1 class="title"><%= @category.name %></h1>
   <table class="table is-fullwidth">
     <thead>

@@ -1,5 +1,14 @@
 <div class="container">
-<%# Image and description %>
+  <%# Breadcrumb %>
+  <nav class="breadcrumb mt-4 mb-8" aria-label="breadcrumbs">
+    <ul>
+      <li><%= link_to "Books", books_path %></li>
+      <li><%= link_to "Categories", categories_path %></li>
+      <li><%= link_to @book.categories.first.name, "/categories/#{@book.categories.first.name}" %></li>
+    </ul>
+  </nav>
+
+  <%# Image and description %>
   <div class = "columns">
     <div class = "column is-one-fifth">
       <figure class="image">
