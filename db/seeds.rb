@@ -122,7 +122,7 @@ user_amount.times do
 end
 
 # Create 200 ratings. Random user_id, random book_id, random rating 1-5, Faker comment string.
-review_amount = 200
+review_amount = 300
 
 review_amount.times do
   Review.create(

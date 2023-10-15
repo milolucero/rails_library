@@ -14,5 +14,10 @@ class Book < ApplicationRecord
   validates :isbn, uniqueness: true, allow_nil: false
 
   # Validation for numericality of page_count
-  validates :page_count, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :page_count, numericality: { only_integer: true, greater_than_or_equal_to: 0 },
+                         allow_nil:    true
+
+  def average_rating
+    reviews.average(:rating).to_f
+  end
 end
