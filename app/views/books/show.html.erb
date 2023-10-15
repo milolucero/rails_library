@@ -66,39 +66,43 @@
       <div class="icon is-medium has-text-info">
         <i class="fas fa-2x fa-language"></i>
       </div>
-      <p class = "is-size-5"> <%= @book.language %></p>
+          <p class="is-size-5"><%= @book.language == "en" ? "English" : @book.language %></p>
       </div>
   </div>
   <%# Reviews %>
-  <details>
-    <summary class = "is-size-5 has-text-weight-bold"> User reviews (<%=@book.reviews.count%>)
-      <div class ="column is-one-fifth has-text-centered">
-        <span><%=@book.average_rating %> of 5.0 </span>
-        <progress class="progress is-danger" value= <%= @book.average_rating %> max="5"><%= @book.average_rating %></progress>
-       </div>
-    </summary>
-     <%# List of reviews %>
-    <ul>
-      <% @book.reviews.each do |review| %>
-        <li>
-          <div class = "box mt-5">
-            <span class="icon-text">
-              <span class="icon has-text-info icon is-large">
-                <i class=" fas fa-2x fa-solid fa-user"></i>
-              </span>
-            <span class ="is-size-5"><%= review.user.username %></span>
-          </span>
-          <div class ="column is-one-fifth has-text-centered">
-            <span><%= review.rating %> of 5</span>
-            <progress class="progress is-danger" value= <%= review.rating%> max="5"><%= review.rating %>of 5</progress>
-          </div>
-            <p class ="mb-3">Created on <%= review.created_at %></p>
-            <p class ="is-size-5"><%= review.comment %></p>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  </details>
+  <% if (@book.reviews.count == 0 )%>
+    <p class = "is-size-5">There are currently no reviews for this book</p>
+  <% else %>
+    <details>
+      <summary class = "is-size-5 has-text-weight-bold"> User reviews (<%=@book.reviews.count%>)
+        <div class ="column is-one-fifth has-text-centered">
+          <span><%=@book.average_rating %> of 5.0 </span>
+          <progress class="progress is-danger" value= <%= @book.average_rating %> max="5"><%= @book.average_rating %></progress>
+        </div>
+      </summary>
+      <%# List of reviews %>
+      <ul>
+        <% @book.reviews.each do |review| %>
+          <li>
+            <div class = "box mt-5">
+              <span class="icon-text">
+                <span class="icon has-text-info icon is-large">
+                  <i class=" fas fa-2x fa-solid fa-user"></i>
+                </span>
+              <span class ="is-size-5"><%= review.user.username %></span>
+            </span>
+            <div class ="column is-one-fifth has-text-centered">
+              <span><%= review.rating %> of 5</span>
+              <progress class="progress is-danger" value= <%= review.rating%> max="5"><%= review.rating %>of 5</progress>
+            </div>
+              <p class ="mb-3">Created on <%= review.created_at %></p>
+              <p class ="is-size-5"><%= review.comment %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </details>
+  <% end %>
 </div>
 
 

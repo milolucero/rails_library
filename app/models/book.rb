@@ -18,6 +18,6 @@ class Book < ApplicationRecord
                          allow_nil:    true
 
   def average_rating
-    reviews.average(:rating).to_f
+    format("%.1f", reviews.average(:rating).to_f)
   end
 end
