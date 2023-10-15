@@ -8,8 +8,18 @@
     </div>
     <div class ="column">
       <h1 class="title has-text-info"><%= @book.title %></h1>
-      <h2 class="subtitle "> By <%= @book.authors.map{ |author| author.name }.join(", ") %> </h2>
-      <p class="is-size-5"><%= @book.description %></p>
+      <div class="is-flex is-justify-content-space-between subtitle">
+        <h2 class=""> By <%= @book.authors.map{ |author| author.name }.join(", ") %> </h2>
+        <h3 class="is-size-6">
+          Categories:
+          <% @book.categories.each do |category| %>
+            <%= link_to "/categories/#{category.name}" do %>
+              <span class="tag is-link"><%= category.name %></span>
+            <% end %>
+          <% end %>
+        </h3>
+      </div>
+      <p class="is-size-6"><%= @book.description %></p>
     </div>
   </div>
  <%# Book details %>

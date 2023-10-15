@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   resources :books, only: [:index, :show]
 
   # Categories
-  # get "/:category", to: "category#index"
+  get "/categories", to: "categories#index"
+  get "/categories/:category_name", to: "categories#show"
 
   # About
   get "/about", to: "about#index"

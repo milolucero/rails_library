@@ -1,10 +1,5 @@
 <div class="container">
-  <div class="is-flex is-justify-content-space-between">
-    <h1 class="title">Books</h1>
-    <%= link_to categories_path do %>
-      <button  class="button is-link is-light">View all categories</button>
-    <% end %>
-  </div>
+  <h1 class="title"><%= @category.name %></h1>
   <table class="table is-fullwidth">
     <thead>
       <th>Title</th>
@@ -19,5 +14,4 @@
       <% end %>
     </tbody>
   </table>
-  <%= paginate @books %>
 </div>
