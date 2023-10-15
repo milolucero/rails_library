@@ -12,7 +12,7 @@
   <div class = "columns">
     <div class = "column is-one-fifth">
       <figure class="image">
-        <%= image_tag @book.image_small_thumbnail %>
+        <%= image_tag @book.image_thumbnail %>
       </figure>
     </div>
     <div class ="column">
@@ -23,7 +23,7 @@
           Categories:
           <% @book.categories.each do |category| %>
             <%= link_to "/categories/#{category.name}" do %>
-              <span class="tag is-link"><%= category.name %></span>
+              <span class="tag is-link is-light is-medium"><%= category.name %></span>
             <% end %>
           <% end %>
         </h3>

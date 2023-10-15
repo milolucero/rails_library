@@ -9,18 +9,28 @@
   </nav>
 
   <h1 class="title"><%= @category.name %></h1>
-  <table class="table is-fullwidth">
-    <thead>
-      <th>Title</th>
-      <th>Author(s)</th>
-    </thead>
-    <tbody>
-      <% @books.each do |book| %>
-        <tr>
-          <td><%= link_to book.title, book %></td>
-          <td><%= book.authors.map{ |author| author.name }.join(", ") %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <table class="table is-fullwidth">
+      <thead>
+        <th>Cover</th>
+        <th>Title</th>
+        <th>Categories</th>
+        <th>Authors</th>
+      </thead>
+      <tbody>
+        <% @books.each do |book| %>
+          <tr>
+            <td><%= image_tag book.image_small_thumbnail, size: "40x40" %></td>
+            <td><%= link_to book.title, book %></td>
+            <td>
+            <% book.categories.each do |category| %>
+              <%= link_to "/categories/#{category.name}" do %>
+                <span class="tag is-link is-light is-medium"><%= category.name %></span>
+              <% end %>
+            <% end %>
+            </td>
+            <td><%= book.authors.map{ |author| author.name }.join(", ") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 </div>
