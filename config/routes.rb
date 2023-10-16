@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   root "books#index"
 
   # Books
-  resources :books, only: [:index, :show]
+  resources :books, only: %i[index show] do
+    collection do
+      get "search"
+    end
+  end
 
   # Categories
   get "/categories", to: "categories#index"

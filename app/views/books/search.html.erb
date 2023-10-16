@@ -1,0 +1,11 @@
+<div class = "container">
+  <h2 class = "title is-size-2 mt-2">Search results:</h2>
+  <p>  Your search for "<strong><%= params[:keywords]%></strong>" found <%=(@books.count)%> books.</p>
+  <ul>
+    <% @books.each do |book| %>
+        <li><%= link_to book.title, book %></li>
+    <% end %>
+  </ul>
+</div>
+
+

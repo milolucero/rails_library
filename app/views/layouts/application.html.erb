@@ -43,16 +43,32 @@
             <%= link_to "About", about_path, class: "navbar-item" %>
           </div>
           <div class="navbar-end">
-            <div class="navbar-item">
-              <%# <div class="buttons">
-                <a class="button is-primary">
-                  <strong>Sign up</strong>
-                </a>
-                <a class="button is-light">
-                  Log in
-                </a>
-              </div> %>
-            </div>
+             <!--Search form -->
+            <%= form_with(url: search_books_path, method: :get, local: true) do %>
+              <div class="field is-grouped is-grouped-right">
+                <p class="control">
+                  <span class="select is-rounded">
+                    <%= collection_select(:book, :publisher_id, Publisher.all, :id, :name, {include_blank: "All"}, class: "select is-rounded") %>
+                  </span>
+                </p>
+                <p class="control">
+                    <%= text_field_tag(:keywords, nil, class: "input is-info is-rounded", placeholder: "Search for books") %>
+                </p>
+                <p class="control">
+                  <%= submit_tag("Search", class: "button is-info is-rounded") %>
+                </p>
+              </div>
+            <% end %>
+        <div class="navbar-item">
+          <%# <div class="buttons">
+            <a class="button is-primary">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light">
+              Log in
+            </a>
+          </div> %>
+        </div>
           </div>
         </div>
       </div>
