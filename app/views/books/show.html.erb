@@ -10,11 +10,19 @@
   </nav>
 
   <%# Image and description %>
-  <div class = "columns">
-    <div class = "column is-one-fifth">
+  <div class="columns">
+    <div class="column is-one-fifth">
       <figure class="image">
         <%= image_tag @book.image_thumbnail %>
       </figure>
+      <%= link_to @book.preview_link, target: "_blank" do %>
+        <button class="button is-medium is-fullwidth is-warning mt-4">
+          <span class="icon" style="opacity: 0.7;">
+            <i class="fa-brands fa-readme mr-6"></i>
+          </span>
+          Open book
+        </button>
+      <% end %>
     </div>
     <div class ="column">
       <div class="is-flex is-justify-content-space-between mb-3">
