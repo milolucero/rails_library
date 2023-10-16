@@ -16,18 +16,44 @@
       </figure>
     </div>
     <div class ="column">
-      <h1 class="title has-text-info"><%= @book.title %></h1>
-      <div class="is-flex is-justify-content-space-between subtitle">
-        <h2 class=""> By <%= @book.authors.map{ |author| author.name }.join(", ") %> </h2>
-        <h3 class="is-size-6">
-          Categories:
-          <% @book.categories.each do |category| %>
-            <%= link_to "/categories/#{category.name}" do %>
-              <span class="tag is-link is-light is-medium"><%= category.name %></span>
-            <% end %>
-          <% end %>
-        </h3>
+      <div class="is-flex is-justify-content-space-between mb-5">
+        <%# Title and subtitle %>
+        <div>
+          <h1 class="title has-text-info"><%= @book.title %></h1>
+          <h2 class="subtitle">By <%= @book.authors.map{ |author| author.name }.join(", ") %></h2>
+        </div>
+
+        <%# Rating and categories %>
+        <div>
+          <div class ="has-text-centered mb-2">
+            <span>Rating <strong><%= Float(@book.average_rating).round(1) %></strong></span>
+            <div class="ml-1">
+              <%# Full stars %>
+              <% Integer(Float(@book.average_rating).floor()).times do %>
+                <i class="fas fa-solid fa-star has-text-warning"></i>
+              <% end %>
+              <%# Half star %>
+              <% if (Float(@book.average_rating).round(1) % 1 >= 0.5) %>
+                <i class="fas fa-solid fa-star-half-stroke has-text-warning"></i>
+              <% elsif (Integer(Float(@book.average_rating).floor()) != 5) %>
+                <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
+              <% end %>
+              <%# Empty stars %>
+              <% (4 - Integer(Float(@book.average_rating).floor())).times do %>
+                <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
+      <h3 class="is-size-7 mb-5">
+        <span class="mr-2 has-text-primary"><strong>CATEGORIES</strong></span>
+        <% @book.categories.each do |category| %>
+          <%= link_to "/categories/#{category.name}" do %>
+            <span class="tag is-link is-light is-medium"><%= category.name %></span>
+          <% end %>
+        <% end %>
+      </h3>
       <p class="is-size-6"><%= @book.description %></p>
     </div>
   </div>
@@ -71,31 +97,49 @@
   </div>
   <%# Reviews %>
   <% if (@book.reviews.count == 0 )%>
-    <p class = "is-size-5">There are currently no reviews for this book</p>
+    <article class="message is-warning">
+      <div class="message-body">
+        There are currently no reviews for this book.
+      </div>
+    </article>
   <% else %>
     <details>
-      <summary class = "is-size-5 has-text-weight-bold"> User reviews (<%=@book.reviews.count%>)
-        <div class ="column is-one-fifth has-text-centered">
-          <span><%=@book.average_rating %> of 5.0 </span>
-          <progress class="progress is-danger" value= <%= @book.average_rating %> max="5"><%= @book.average_rating %></progress>
-        </div>
+      <summary class="is-size-5 has-text-weight-bold">
+        User reviews (<%=@book.reviews.count%>)
       </summary>
       <%# List of reviews %>
       <ul>
         <% @book.reviews.each do |review| %>
           <li>
-            <div class = "box mt-5">
+            <div class="box mt-5">
+              <div class="is-flex is-justify-content-space-between">
               <span class="icon-text">
                 <span class="icon has-text-info icon is-large">
                   <i class=" fas fa-2x fa-solid fa-user"></i>
                 </span>
-              <span class ="is-size-5"><%= review.user.username %></span>
-            </span>
-            <div class ="column is-one-fifth has-text-centered">
-              <span><%= review.rating %> of 5</span>
-              <progress class="progress is-danger" value= <%= review.rating%> max="5"><%= review.rating %>of 5</progress>
+                <div>
+                  <span class ="is-size-5"><%= review.user.username %></span>
+                  <p class ="mb-3">Reviewed on <%= review.created_at.strftime("%d/%m/%Y, %H:%M:%S") %></p>
+                </div>
+              </span>
+              <%# Rating and categories %>
+              <div>
+                <div class ="has-text-centered mb-2">
+                  <span>Rating <strong><%= Float(review.rating) %></strong></span>
+                  <div class="ml-1">
+                    <%# Full stars %>
+                    <% Integer(Float(review.rating).floor()).times do %>
+                      <i class="fas fa-solid fa-star has-text-warning"></i>
+                    <% end %>
+                    <%# Empty stars %>
+                    <% (5 - Integer(Float(review.rating).floor())).times do %>
+                      <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
             </div>
-              <p class ="mb-3">Created on <%= review.created_at %></p>
+
               <p class ="is-size-5"><%= review.comment %></p>
             </div>
           </li>

@@ -109,7 +109,7 @@ books_requests.each do |request|
   end
 end
 
-# Use Faker to create 50 users (username, email, first name, last name)
+# Use Faker to create users (username, email, first name, last name)
 user_amount = 50
 
 user_amount.times do
@@ -121,8 +121,8 @@ user_amount.times do
   )
 end
 
-# Create 200 ratings. Random user_id, random book_id, random rating 1-5, Faker comment string.
-review_amount = 300
+# Use Faker to create ratings. Random user_id, random book_id, random rating 1-5, Faker comment string.
+review_amount = 500
 
 review_amount.times do
   Review.create(
