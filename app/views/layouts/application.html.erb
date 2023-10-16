@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RailsLibrary</title>
+    <title><%= yield(:html_title) + "-" if content_for(:html_title) %>BookHub Library</title>
+    <%= favicon_link_tag asset_path('icon.png') %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
