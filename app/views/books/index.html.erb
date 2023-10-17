@@ -2,21 +2,23 @@
   <div class="container">
     <div class="is-flex is-justify-content-space-between">
       <h1 class="title">Books</h1>
-      <%= link_to categories_path do %>
-        <button  class="button is-info">View all categories</button>
+      <%= link_to categories_path, class: "button is-info" do %>
+          View all categories
       <% end %>
     </div>
     <table class="table is-fullwidth">
       <thead>
-        <th>Cover</th>
-        <th>Title</th>
-        <th>Categories</th>
-        <th>Authors</th>
+        <tr>
+          <th>Cover</th>
+          <th>Title</th>
+          <th>Categories</th>
+          <th>Authors</th>
+        </tr>
       </thead>
       <tbody>
         <% @books.each do |book| %>
           <tr>
-            <td><%= image_tag book.image_small_thumbnail, size: "40x40" %></td>
+            <td><%= image_tag book.image_small_thumbnail, size: "40x40", alt: book.title %></td>
             <td><%= link_to book.title, book %></td>
             <td>
             <% book.categories.each do |category| %>

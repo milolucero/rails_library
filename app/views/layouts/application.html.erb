@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= yield(:html_title) + "-" if content_for(:html_title) %>BookHub Library</title>
     <%= favicon_link_tag asset_path('icon.png') %>
@@ -19,7 +19,7 @@
         <div class="navbar-brand">
           <%# Logo image %>
           <%= link_to root_path, class: "navbar-item" do %>
-            <%= image_tag "bookhub_logo.svg" %>
+            <%= image_tag "bookhub_logo.svg", alt: "BookHub Logo" %>
           <% end %>
           <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
@@ -37,7 +37,7 @@
               </a>
               <div class="navbar-dropdown">
                 <% @categories.each do |category| %>
-                  <%= link_to "#{category.name} (#{category.book_count})", "/categories/#{category.name}", class: "navbar-item" %>
+                   <%= link_to "#{category.name} (#{category.book_count})", "/categories/#{category.name}", class: "navbar-item" %>
                 <% end %>
               </div>
             </div>
