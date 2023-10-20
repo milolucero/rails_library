@@ -98,7 +98,8 @@ books_requests.each do |request|
 
     if categories.present?
       categories.each do |category_name|
-        category = Category.find_or_create_by(name: category_name)
+        # replace spaces and commas with underscore and hyphen in category_name
+        category = Category.find_or_create_by(name: category_name.gsub(" ", "_").gsub(",", "-"))
         category.books << book
       end
     end

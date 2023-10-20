@@ -37,7 +37,8 @@
               </a>
               <div class="navbar-dropdown">
                 <% @categories.each do |category| %>
-                   <%= link_to "#{category.name} (#{category.book_count})", "/categories/#{category.name}", class: "navbar-item" %>
+                <!-- replace underscore and hyphen in category.name back to spaces and comma for proper display-->
+                   <%= link_to "#{category.name.gsub("_", " ").gsub("-", ",")} (#{category.book_count})", "/categories/#{category.name}", class: "navbar-item" %>
                 <% end %>
               </div>
             </div>

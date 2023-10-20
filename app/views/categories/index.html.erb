@@ -19,11 +19,12 @@
       <% @categories.each do |category| %>
         <tr>
           <td>
-			<%= link_to category.name, "/categories/#{category.name}" %>
-		  </td>
+            <!-- Fix category name for HTML validation & proper display -->
+            <%= link_to category.name.gsub("_", " ").gsub("-", ","), "/categories/#{category.name}" %>
+          </td>
           <td class="has-text-right">
-			<%= category.book_count %>
-		  </td>
+			      <%= category.book_count %>
+		      </td>
         </tr>
       <% end %>
     </tbody>
