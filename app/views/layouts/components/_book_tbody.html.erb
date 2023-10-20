@@ -1,0 +1,12 @@
+<tr>
+  <td><%= image_tag book.image_small_thumbnail, size: "40x40", alt: book.title %></td>
+  <td><%= link_to book.title, book %></td>
+  <td>
+  <% book.categories.each do |category| %>
+    <%= link_to "/categories/#{category.name}" do %>
+      <span class="tag is-link is-light is-medium"><%= category.name.gsub("_", " ").gsub("-", ",") %></span>
+    <% end %>
+  <% end %>
+  </td>
+  <td><%= book.authors.map{ |author| author.name }.join(", ") %></td>
+</tr>
