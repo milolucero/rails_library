@@ -5,6 +5,8 @@ class Book < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :users, through: :reviews
   belongs_to :sale_info, dependent: :destroy
+  has_many :book_orders
+  has_many :orders, through: :book_orders
 
   validates :title, presence: true
 
