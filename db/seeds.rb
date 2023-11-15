@@ -102,8 +102,8 @@ books_requests.each do |request|
       preview_link:          element["volumeInfo"]["previewLink"],
       search_info:           element["searchInfo"]&.dig("textSnippet"),
       price:,
-      is_on_sale:            Faker::Boolean.boolean,
-      sale_price:            0.5 * price
+      is_on_sale:            rand(10).zero?, # 1 in 10 chance for the book being on sale
+      sale_price:            (0.5 * price).round(2)
     )
 
     # Create authors and categories as needed
