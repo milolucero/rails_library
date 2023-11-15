@@ -61,7 +61,7 @@ books_requests.each do |request|
     page_count = element["volumeInfo"]["pageCount"]
     authors = element["volumeInfo"]["authors"]
     categories = element["volumeInfo"]["categories"]
-    price = element["saleInfo"]&.dig("listPrice", "amount")
+    price = Float(Faker::Commerce.price(range: 5..100.0, as_string: true))
 
     book_attributes = [publisher_name, description, isbn, page_count, authors, categories,
                        price]
@@ -103,7 +103,7 @@ books_requests.each do |request|
       search_info:           element["searchInfo"]&.dig("textSnippet"),
       price:,
       is_on_sale:            Faker::Boolean.boolean,
-      sale_price:            0.1 * element["saleInfo"]&.dig("listPrice", "amount")
+      sale_price:            0.5 * price
     )
 
     # Create authors and categories as needed
