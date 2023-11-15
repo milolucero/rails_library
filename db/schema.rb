@@ -44,7 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_150231) do
     t.string "image_small_thumbnail"
     t.string "image_thumbnail"
     t.string "preview_link"
-    t.integer "sale_info_id", null: false
     t.string "search_info"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -52,7 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_150231) do
     t.boolean "is_on_sale"
     t.decimal "sale_price"
     t.index ["publisher_id"], name: "index_books_on_publisher_id"
-    t.index ["sale_info_id"], name: "index_books_on_sale_info_id"
   end
 
   create_table "books_categories", id: false, force: :cascade do |t|
@@ -105,14 +103,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_150231) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
-  create_table "sale_infos", force: :cascade do |t|
-    t.decimal "price"
-    t.string "currency"
-    t.string "buy_link"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -131,7 +121,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_150231) do
   add_foreign_key "book_orders", "books"
   add_foreign_key "book_orders", "orders"
   add_foreign_key "books", "publishers"
-  add_foreign_key "books", "sale_infos"
   add_foreign_key "orders", "users"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"

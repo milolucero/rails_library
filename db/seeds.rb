@@ -13,7 +13,7 @@ Book.destroy_all
 Author.destroy_all
 Category.destroy_all
 Publisher.destroy_all
-SaleInfo.destroy_all
+# SaleInfo.destroy_all
 
 # Reset the auto-Increment counter for the primary key.
 tables_to_reset = [
@@ -23,7 +23,6 @@ tables_to_reset = [
   "categories",
   "books",
   "publishers",
-  "sale_infos",
   "provinces",
   "orders",
   "book_orders"
@@ -62,8 +61,10 @@ books_requests.each do |request|
     page_count = element["volumeInfo"]["pageCount"]
     authors = element["volumeInfo"]["authors"]
     categories = element["volumeInfo"]["categories"]
+    price = element["saleInfo"]&.dig("listPrice", "amount")
 
-    book_attributes = [publisher_name, description, isbn, page_count, authors, categories]
+    book_attributes = [publisher_name, description, isbn, page_count, authors, categories,
+                       price]
 
     # Check if any of the attributes is null or equal zero then skip this book
     if book_attributes.any? { |attribute| attribute.nil? || attribute == 0 }
@@ -81,13 +82,12 @@ books_requests.each do |request|
     # Create Publisher
     publisher = Publisher.find_or_create_by(name: publisher_name)
 
-    # Create Sale_Info
-    sale_info = SaleInfo.create(
-      price:    element["saleInfo"]&.dig("listPrice", "amount"),
-      currency: element["saleInfo"]&.dig("listPrice", "currencyCode"),
-      buy_link: element["saleInfo"]&.dig("buyLink")
-    )
-
+    # # Create Sale_Info
+    # sale_info = SaleInfo.create(
+    #   price:    element["saleInfo"]&.dig("listPrice", "amount"),
+    #   currency: element["saleInfo"]&.dig("listPrice", "currencyCode"),
+    #   buy_link: element["saleInfo"]&.dig("buyLink")
+    # )
     # Create Book
     book = Book.create(
       title:                 element["volumeInfo"]["title"],
@@ -100,8 +100,10 @@ books_requests.each do |request|
       image_small_thumbnail: element["volumeInfo"]["imageLinks"]&.dig("smallThumbnail"),
       image_thumbnail:       element["volumeInfo"]["imageLinks"]&.dig("thumbnail"),
       preview_link:          element["volumeInfo"]["previewLink"],
-      sale_info:,
-      search_info:           element["searchInfo"]&.dig("textSnippet")
+      search_info:           element["searchInfo"]&.dig("textSnippet"),
+      price:,
+      is_on_sale:            Faker::Boolean.boolean,
+      sale_price:            0.1 * element["saleInfo"]&.dig("listPrice", "amount")
     )
 
     # Create authors and categories as needed
@@ -131,11 +133,12 @@ provinces = JSON.parse(provinces_json_data)
 
 provinces.each do |province|
   Province.create!(
-    name: province["name"],
+    name:              province["name"],
     name_abbreviation: province["name_abbreviation"],
-    gst: province["gst"],
-    pst: province["pst"],
-    hst: province["hst"])
+    gst:               province["gst"],
+    pst:               province["pst"],
+    hst:               province["hst"]
+  )
 end
 
 # Use Faker to create users (username, email, first name, last name)
@@ -167,5 +170,6 @@ review_amount.times do
 end
 
 # Create a fake order
-Order.create!(user_id: 1, subtotal: 100, purchase_gst: 0.05, purchase_pst: 0.07, purchase_hst: 0.0, status: "Pending")
+Order.create!(user_id: 1, subtotal: 100, purchase_gst: 0.05, purchase_pst: 0.07, purchase_hst: 0.0,
+              status: "Pending")
 BookOrder.create!(book_id: 1, order_id: 1, quantity: 2, purchase_price: 25)
