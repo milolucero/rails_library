@@ -1,6 +1,9 @@
 class User < ApplicationRecord
+  belongs_to :province
   has_many :reviews
   has_many :books, through: :reviews
+  has_many :orders
+  has_many :book_orders, through: :orders
 
   validates :username, :email, :first_name, :last_name, presence: true
   validates :username, :email, uniqueness: true

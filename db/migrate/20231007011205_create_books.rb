@@ -12,7 +12,7 @@ class CreateBooks < ActiveRecord::Migration[7.0]
       t.string :image_small_thumbnail
       t.string :image_thumbnail
       t.string :preview_link
-      t.references :sale_info, null: false, foreign_key: true
+      #t.references :sale_info, null: false, foreign_key: true
       t.string :search_info
 
       t.timestamps

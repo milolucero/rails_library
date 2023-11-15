@@ -1,18 +1,33 @@
 require "faker"
 require "net/http"
 require "json"
+Faker::Config.locale = "en-CA"
 
 # Delete all data from the database
 Review.destroy_all
+BookOrder.destroy_all
+Order.destroy_all
 User.destroy_all
+Province.destroy_all
 Book.destroy_all
 Author.destroy_all
 Category.destroy_all
 Publisher.destroy_all
-SaleInfo.destroy_all
+# SaleInfo.destroy_all
 
 # Reset the auto-Increment counter for the primary key.
-tables_to_reset = ["reviews", "users", "authors", "categories", "books", "publishers", "sale_infos"]
+tables_to_reset = [
+  "reviews",
+  "users",
+  "authors",
+  "categories",
+  "books",
+  "publishers",
+  "provinces",
+  "orders",
+  "book_orders"
+]
+
 tables_to_reset.each do |table_name|
   ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='#{table_name}';")
 end
@@ -46,8 +61,10 @@ books_requests.each do |request|
     page_count = element["volumeInfo"]["pageCount"]
     authors = element["volumeInfo"]["authors"]
     categories = element["volumeInfo"]["categories"]
+    price = Float(Faker::Commerce.price(range: 5..100.0, as_string: true))
 
-    book_attributes = [publisher_name, description, isbn, page_count, authors, categories]
+    book_attributes = [publisher_name, description, isbn, page_count, authors, categories,
+                       price]
 
     # Check if any of the attributes is null or equal zero then skip this book
     if book_attributes.any? { |attribute| attribute.nil? || attribute == 0 }
@@ -65,13 +82,12 @@ books_requests.each do |request|
     # Create Publisher
     publisher = Publisher.find_or_create_by(name: publisher_name)
 
-    # Create Sale_Info
-    sale_info = SaleInfo.create(
-      price:    element["saleInfo"]&.dig("listPrice", "amount"),
-      currency: element["saleInfo"]&.dig("listPrice", "currencyCode"),
-      buy_link: element["saleInfo"]&.dig("buyLink")
-    )
-
+    # # Create Sale_Info
+    # sale_info = SaleInfo.create(
+    #   price:    element["saleInfo"]&.dig("listPrice", "amount"),
+    #   currency: element["saleInfo"]&.dig("listPrice", "currencyCode"),
+    #   buy_link: element["saleInfo"]&.dig("buyLink")
+    # )
     # Create Book
     book = Book.create(
       title:                 element["volumeInfo"]["title"],
@@ -84,8 +100,10 @@ books_requests.each do |request|
       image_small_thumbnail: element["volumeInfo"]["imageLinks"]&.dig("smallThumbnail"),
       image_thumbnail:       element["volumeInfo"]["imageLinks"]&.dig("thumbnail"),
       preview_link:          element["volumeInfo"]["previewLink"],
-      sale_info:,
-      search_info:           element["searchInfo"]&.dig("textSnippet")
+      search_info:           element["searchInfo"]&.dig("textSnippet"),
+      price:,
+      is_on_sale:            rand(10).zero?, # 1 in 10 chance for the book being on sale
+      sale_price:            (0.5 * price).round(2)
     )
 
     # Create authors and categories as needed
@@ -110,15 +128,33 @@ books_requests.each do |request|
   end
 end
 
+# Populate Provinces table
+provinces_json_data = File.read(Rails.root.join("db/provinces.json"))
+provinces = JSON.parse(provinces_json_data)
+
+provinces.each do |province|
+  Province.create!(
+    name:              province["name"],
+    name_abbreviation: province["name_abbreviation"],
+    gst:               province["gst"],
+    pst:               province["pst"],
+    hst:               province["hst"]
+  )
+end
+
 # Use Faker to create users (username, email, first name, last name)
 user_amount = 50
 
 user_amount.times do
-  User.create(
-    username:   Faker::Internet.unique.username,
-    email:      Faker::Internet.unique.email,
-    first_name: Faker::Name.first_name,
-    last_name:  Faker::Name.last_name
+  User.create!(
+    username:    Faker::Internet.unique.username,
+    email:       Faker::Internet.unique.email,
+    first_name:  Faker::Name.first_name,
+    last_name:   Faker::Name.last_name,
+    address:     Faker::Address.street_address,
+    city:        Faker::Address.city,
+    province_id: rand(1..13),
+    postal_code: Faker::Address.postcode
   )
 end
 
@@ -133,3 +169,13 @@ review_amount.times do
     comment: Faker::Quotes::Shakespeare.as_you_like_it_quote
   )
 end
+
+# Create a fake order, bookorder, book, user
+Order.create!(user_id: 1, subtotal: 100, purchase_gst: 0.05, purchase_pst: 0.07, purchase_hst: 0.0,
+              status: "Pending")
+BookOrder.create!(book_id: 1, order_id: 1, quantity: 2, purchase_price: 25)
+
+Book.create!(title: "Book about  an advanture", publisher_id: 10, published_date: "20-12-2020",
+             description: "The best book", isbn: "123456789", page_count: 100, language: "en", image_small_thumbnail: "", image_thumbnail: "", preview_link: nil, search_info: nil, price: 20.55, is_on_sale: true, sale_price: 0.2055)
+User.create!(username: "cbrown", email: "c.brown@mail.com", password: "1234", first_name: "Chris",
+             last_name: "Brown", address: "123 Main Street", city: "Winnipeg", province_id: 4, postal_code: "R3P9N8")
