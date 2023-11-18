@@ -1,9 +1,4 @@
 ActiveAdmin.register Book do
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
   permit_params :title, :publisher_id, :published_date, :description, :isbn, :page_count,
                 :language, :image_small_thumbnail, :image_thumbnail, :preview_link, :search_info, :price, :is_on_sale, :sale_price,
                 category_ids: [], author_ids: []
@@ -83,12 +78,4 @@ ActiveAdmin.register Book do
 
     f.actions
   end
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:title, :publisher_id, :published_date, :description, :isbn, :page_count, :language, :image_small_thumbnail, :image_thumbnail, :preview_link, :search_info, :price, :is_on_sale, :sale_price]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
 end

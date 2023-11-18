@@ -5,22 +5,23 @@
     <ul>
       <li><%= link_to "Books", books_path %></li>
       <li><%= link_to "Categories", categories_path %></li>
-      <li><%= link_to @book.categories.first.name, "/categories/#{@book.categories.first.name}" %></li>
+      <% if(@book.categories.any?) %>
+        <li><%= link_to @book.categories.first.name, "/categories/#{@book.categories.first.name}" %></li>
+      <% end %>
     </ul>
   </nav>
-
   <%# Image and description %>
   <div class="columns">
     <div class="column is-one-fifth">
       <figure class="image">
         <%= image_tag @book.image_thumbnail, alt: @book.title %>
       </figure>
-        <%= link_to @book.preview_link, target: "_blank", class: "button is-medium is-fullwidth is-warning mt-4" do %>
-          <span class="icon" style="opacity: 0.7;">
-            <i class="fa-brands fa-readme mr-6"></i>
-          </span>
-          Open book
-        <% end %>
+      <%= link_to @book.preview_link, target: "_blank", class: "button is-medium is-fullwidth is-warning mt-4" do %>
+        <span class="icon" style="opacity: 0.7;">
+          <i class="fa-brands fa-readme mr-6"></i>
+        </span>
+        Open book
+      <% end %>
     </div>
     <div class ="column">
       <div class="is-flex is-justify-content-space-between mb-3">
@@ -29,7 +30,6 @@
           <h1 class="title has-text-info"><%= @book.title %></h1>
           <h2 class="subtitle">By <%= @book.authors.map{ |author| author.name }.join(", ") %></h2>
         </div>
-
         <%# Rating %>
         <div>
           <div class ="has-text-centered mb-2">
@@ -55,30 +55,32 @@
       </div>
       <%# Categories %>
       <h3 class="is-size-7 mb-6">
-        <span class="mr-2 has-text-primary"><strong>CATEGORIES</strong></span>
-        <% @book.categories.each do |category| %>
-          <%= link_to "/categories/#{category.name}" do %>
-            <span class="tag is-link is-light is-medium"><%= category.name %></span>
+        <% if(@book.categories.any?) %>
+          <span class="mr-2 has-text-primary"><strong>CATEGORIES</strong></span>
+          <% @book.categories.each do |category| %>
+            <%= link_to "/categories/#{category.name}" do %>
+              <span class="tag is-link is-light is-medium"><%= category.name %></span>
+            <% end %>
           <% end %>
         <% end %>
       </h3>
       <p class="is-size-6"><%= @book.description %></p>
     </div>
   </div>
- <%# Book details %>
+  <%# Book details %>
   <div class = "columns is-centered is-vcentered mt-5">
     <%# Publisher %>
     <div class ="column is-one-fifth has-text-centered">
-        <div class="icon is-medium has-text-info">
-          <i class="fas fa-2x fa-solid fa-house"></i>
-        </div>
-        <p class = "is-size-5"> <%= @book.publisher.name %></p>
+      <div class="icon is-medium has-text-info">
+        <i class="fas fa-2x fa-solid fa-house"></i>
+      </div>
+      <p class = "is-size-5"> <%= @book.publisher.name %></p>
     </div>
     <%# Published date %>
     <div class ="column is-one-fifth has-text-centered">
       <div class="icon is-medium has-text-info">
-          <i class="fas fa-2x fa-solid fa-calendar-days"></i>
-        </div>
+        <i class="fas fa-2x fa-solid fa-calendar-days"></i>
+      </div>
       <p class = "is-size-5"> <%= @book.published_date %></p>
     </div>
     <%# ISBN %>
@@ -100,8 +102,8 @@
       <div class="icon is-medium has-text-info">
         <i class="fas fa-2x fa-language"></i>
       </div>
-          <p class="is-size-5"><%= @book.language == "en" ? "English" : @book.language %></p>
-      </div>
+      <p class="is-size-5"><%= @book.language == "en" ? "English" : @book.language %></p>
+    </div>
   </div>
   <%# Reviews %>
   <% if (@book.reviews.count == 0 )%>
@@ -121,33 +123,32 @@
           <li>
             <div class="box mt-5">
               <div class="is-flex is-justify-content-space-between">
-              <span class="icon-text">
-                <span class="icon has-text-info icon is-large">
-                  <i class=" fas fa-2x fa-solid fa-user"></i>
+                <span class="icon-text">
+                  <span class="icon has-text-info icon is-large">
+                    <i class=" fas fa-2x fa-solid fa-user"></i>
+                  </span>
+                  <div>
+                    <span class ="is-size-5"><%= review.user.username %></span>
+                    <p class ="mb-3">Reviewed on <%= review.created_at.strftime("%d/%m/%Y, %H:%M:%S") %></p>
+                  </div>
                 </span>
+                <%# Rating %>
                 <div>
-                  <span class ="is-size-5"><%= review.user.username %></span>
-                  <p class ="mb-3">Reviewed on <%= review.created_at.strftime("%d/%m/%Y, %H:%M:%S") %></p>
-                </div>
-              </span>
-              <%# Rating %>
-              <div>
-                <div class ="has-text-centered mb-2">
-                  <span>Rating <strong><%= Float(review.rating) %></strong></span>
-                  <div class="ml-1">
-                    <%# Full stars %>
-                    <% Integer(Float(review.rating).floor()).times do %>
-                      <i class="fas fa-solid fa-star has-text-warning"></i>
-                    <% end %>
-                    <%# Empty stars %>
-                    <% (5 - Integer(Float(review.rating).floor())).times do %>
-                      <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
-                    <% end %>
+                  <div class ="has-text-centered mb-2">
+                    <span>Rating <strong><%= Float(review.rating) %></strong></span>
+                    <div class="ml-1">
+                      <%# Full stars %>
+                      <% Integer(Float(review.rating).floor()).times do %>
+                        <i class="fas fa-solid fa-star has-text-warning"></i>
+                      <% end %>
+                      <%# Empty stars %>
+                      <% (5 - Integer(Float(review.rating).floor())).times do %>
+                        <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
               <p class ="is-size-5"><%= review.comment %></p>
             </div>
           </li>
@@ -156,14 +157,3 @@
     </details>
   <% end %>
 </div>
-
-
-
-
-
-
-
-
-
-
-

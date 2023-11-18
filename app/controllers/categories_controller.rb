@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   def index
-    # @categories is already defined in the application_controller
+    # @all_categories is already defined in the application_controller
+    @categories = @all_categories
   end
 
   def show
