@@ -149,6 +149,7 @@ user_amount.times do
   User.create!(
     username:    Faker::Internet.unique.username,
     email:       Faker::Internet.unique.email,
+    password:    "password",
     first_name:  Faker::Name.first_name,
     last_name:   Faker::Name.last_name,
     address:     Faker::Address.street_address,
