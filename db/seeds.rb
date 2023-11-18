@@ -149,6 +149,7 @@ user_amount.times do
   User.create!(
     username:    Faker::Internet.unique.username,
     email:       Faker::Internet.unique.email,
+    password:    "password",
     first_name:  Faker::Name.first_name,
     last_name:   Faker::Name.last_name,
     address:     Faker::Address.street_address,
@@ -179,3 +180,9 @@ Book.create!(title: "Book about  an advanture", publisher_id: 10, published_date
              description: "The best book", isbn: "123456789", page_count: 100, language: "en", image_small_thumbnail: "", image_thumbnail: "", preview_link: nil, search_info: nil, price: 20.55, is_on_sale: true, sale_price: 0.2055)
 User.create!(username: "cbrown", email: "c.brown@mail.com", password: "1234", first_name: "Chris",
              last_name: "Brown", address: "123 Main Street", city: "Winnipeg", province_id: 4, postal_code: "R3P9N8")
+
+# ActiveAdmin user to database
+if Rails.env.development?
+  AdminUser.create!(email: "admin@bookhub.com", password: "password",
+                    password_confirmation: "password")
+end
