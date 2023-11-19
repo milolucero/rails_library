@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_16_045145) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_19_175345) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -46,6 +46,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_045145) do
   create_table "authors_books", id: false, force: :cascade do |t|
     t.integer "book_id", null: false
     t.integer "author_id", null: false
+  end
+
+  create_table "book_authors", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.integer "author_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_book_authors_on_author_id"
+    t.index ["book_id"], name: "index_book_authors_on_book_id"
+  end
+
+  create_table "book_categories", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.integer "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_book_categories_on_book_id"
+    t.index ["category_id"], name: "index_book_categories_on_category_id"
   end
 
   create_table "book_orders", force: :cascade do |t|
@@ -144,6 +162,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_16_045145) do
     t.index ["province_id"], name: "index_users_on_province_id"
   end
 
+  add_foreign_key "book_authors", "authors"
+  add_foreign_key "book_authors", "books"
+  add_foreign_key "book_categories", "books"
+  add_foreign_key "book_categories", "categories"
   add_foreign_key "book_orders", "books"
   add_foreign_key "book_orders", "orders"
   add_foreign_key "books", "publishers"
