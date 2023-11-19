@@ -18,7 +18,17 @@ class User < ApplicationRecord
             format: { with:    /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i,
                       message: "Must be a valid email address" }
 
-  # Validation for length (assuming minimum and maximum lengths)
+  # Password validations
+  validates :password, presence: true, length: { minimum: 8 }
+  validates :password, confirmation: true, unless: -> { password.blank? }
+
+  # Validation for length (assuming minimum and maximum lengths) of attribures.
   validates :username, length: { minimum: 3, maximum: 30 }
   validates :first_name, :last_name, length: { maximum: 50 }
+  validates :address, length: { maximum: 100 }
+  validates :city, length: { maximum: 60 }
+
+  # Validation for postal code format
+  validates :postal_code,
+            format: { with: /\A[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] \d[ABCEGHJKLMNPRSTVWXYZ]\d\z/i }
 end
