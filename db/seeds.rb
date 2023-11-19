@@ -6,6 +6,7 @@ Faker::Config.locale = "en-CA"
 # Delete all data from the database
 Review.destroy_all
 BookOrder.destroy_all
+BookCategory.destroy_all
 Order.destroy_all
 User.destroy_all
 Province.destroy_all
@@ -21,6 +22,7 @@ tables_to_reset = [
   "users",
   "authors",
   "categories",
+  "book_categories",
   "books",
   "publishers",
   "provinces",
