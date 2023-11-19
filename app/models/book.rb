@@ -1,8 +1,9 @@
 class Book < ApplicationRecord
   belongs_to :publisher, optional: true, inverse_of: :books
-  has_and_belongs_to_many :authors, dependent: :destroy
   has_many :book_categories, dependent: :destroy
   has_many :categories, through: :book_categories
+  has_many :book_authors, dependent: :destroy
+  has_many :authors, through: :book_authors
   has_many :reviews, dependent: :destroy
   has_many :users, through: :reviews
   has_many :book_orders
