@@ -14,7 +14,11 @@
   <div class="columns">
     <div class="column is-one-fifth">
       <figure class="image">
-        <%= image_tag @book.image_thumbnail, alt: @book.title %>
+        <% if @book.image.present? %>
+          <%= image_tag(@book.image) %>
+        <% else %>
+          <%= image_tag(@book.image_thumbnail, alt: @book.title) %>
+        <% end %>
       </figure>
       <%= link_to @book.preview_link, target: "_blank", class: "button is-medium is-fullwidth is-warning mt-4" do %>
         <span class="icon" style="opacity: 0.7;">
