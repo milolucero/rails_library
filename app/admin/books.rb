@@ -57,14 +57,13 @@ ActiveAdmin.register Book do
       end
       row :image do
         if book.image.present?
-          image_tag(book.image, height: "300px")
+          image_tag(book.image.variant(resize_to_limit: [200, 300]))
         elsif book.image_thumbnail.present?
           image_tag(book.image_thumbnail, height: "300px")
         else
           content_tag(:span, "No Image")
         end
       end
-
       row :price
       row :is_on_sale
       row :sale_price
@@ -78,8 +77,13 @@ ActiveAdmin.register Book do
     f.inputs
     f.inputs do
       f.input :page_count
-      f.input :image, as:   :file,
-                      hint: f.object.image.present? ? image_tag(f.object.image.variant(resize_to_limit: [200, 250])) : image_tag(f.object.image_thumbnail, size: "200X250")
+      if f.object.image.present?
+        f.input :image, as: :file, hint: image_tag(f.object.image.variant(resize_to_limit: [200, 250]))
+      elsif f.object.image_thumbnail.present?
+        f.input :image, as: :file, hint: image_tag(f.object.image_thumbnail, size: "200x250")
+      else
+        f.input :image, as: :file
+      end
       f.has_many :book_categories, allow_destroy: true do |n_f|
         n_f.input :category
       end
