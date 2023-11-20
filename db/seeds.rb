@@ -15,6 +15,7 @@ Book.destroy_all
 Author.destroy_all
 Category.destroy_all
 Publisher.destroy_all
+AdminUser.destroy_all
 # SaleInfo.destroy_all
 
 # Reset the auto-Increment counter for the primary key.
@@ -37,14 +38,15 @@ tables_to_reset.each do |table_name|
 end
 
 # Getting data from Google Books API with multiple requests.
+BOOKS_PER_CATEGORY = 40
 books_requests = [
-  { key_word: "computers", number: 40 },
-  { key_word: "biography", number: 40 },
-  { key_word: "fiction", number: 40 },
-  { key_word: "education", number: 40 },
-  { key_word: "art", number: 40 },
-  { key_word: "sports", number: 40 },
-  { key_word: "travel", number: 40 }
+  { key_word: "computers", number: BOOKS_PER_CATEGORY },
+  { key_word: "biography", number: BOOKS_PER_CATEGORY },
+  { key_word: "fiction", number: BOOKS_PER_CATEGORY },
+  { key_word: "education", number: BOOKS_PER_CATEGORY },
+  { key_word: "art", number: BOOKS_PER_CATEGORY },
+  { key_word: "sports", number: BOOKS_PER_CATEGORY },
+  { key_word: "travel", number: BOOKS_PER_CATEGORY }
 ]
 
 books_requests.each do |request|
@@ -147,11 +149,14 @@ provinces.each do |province|
 end
 
 # Use Faker to create users (username, email, first name, last name)
-user_amount = 50
+USER_AMOUNT = 50
 
-user_amount.times do
+USER_AMOUNT.times do
+  username = ""
+  username = Faker::Internet.unique.username while username.length < 3
+
   User.create!(
-    username:    Faker::Internet.unique.username,
+    username:    username,
     email:       Faker::Internet.unique.email,
     password:    "password",
     first_name:  Faker::Name.first_name,
@@ -164,9 +169,9 @@ user_amount.times do
 end
 
 # Use Faker to create ratings. Random user_id, random book_id, random rating 1-5, Faker comment string.
-review_amount = 500
+REVIEW_AMOUNT = 500
 
-review_amount.times do
+REVIEW_AMOUNT.times do
   Review.create(
     user_id: rand(1..User.count),
     book_id: rand(1..Book.count),
@@ -180,8 +185,7 @@ Order.create!(user_id: 1, subtotal: 100, purchase_gst: 0.05, purchase_pst: 0.07,
               status: "Pending")
 BookOrder.create!(book_id: 1, order_id: 1, quantity: 2, purchase_price: 25)
 
-Book.create!(title: "Book about  an advanture", publisher_id: 10, published_date: "20-12-2020",
-             description: "The best book", isbn: "123456789", page_count: 100, language: "en", image_small_thumbnail: "", image_thumbnail: "", preview_link: nil, search_info: nil, price: 20.55, is_on_sale: true, sale_price: 0.2055)
+Book.create!(title: "Book about  an advanture", publisher_id: 1, published_date: "20-12-2020", description: "The best book", isbn: "123456789", page_count: 100, language: "en", image_small_thumbnail: "", image_thumbnail: "", preview_link: nil, search_info: nil, price: 20.55, is_on_sale: true, sale_price: 0.2055)
 User.create!(username: "cbrown", email: "c.brown@mail.com", password: "password", first_name: "Chris",
              last_name: "Brown", address: "123 Main Street", city: "Winnipeg", province_id: 4, postal_code: "R3P9N8")
 
