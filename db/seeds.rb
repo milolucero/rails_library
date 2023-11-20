@@ -182,7 +182,7 @@ BookOrder.create!(book_id: 1, order_id: 1, quantity: 2, purchase_price: 25)
 
 Book.create!(title: "Book about  an advanture", publisher_id: 10, published_date: "20-12-2020",
              description: "The best book", isbn: "123456789", page_count: 100, language: "en", image_small_thumbnail: "", image_thumbnail: "", preview_link: nil, search_info: nil, price: 20.55, is_on_sale: true, sale_price: 0.2055)
-User.create!(username: "cbrown", email: "c.brown@mail.com", password: "1234", first_name: "Chris",
+User.create!(username: "cbrown", email: "c.brown@mail.com", password: "password", first_name: "Chris",
              last_name: "Brown", address: "123 Main Street", city: "Winnipeg", province_id: 4, postal_code: "R3P9N8")
 
 # ActiveAdmin user to database

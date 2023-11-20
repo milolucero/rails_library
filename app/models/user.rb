@@ -30,5 +30,5 @@ class User < ApplicationRecord
 
   # Validation for postal code format
   validates :postal_code,
-            format: { with: /\A[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] \d[ABCEGHJKLMNPRSTVWXYZ]\d\z/i }
+            format: { with: /\A[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d\z/i }
 end
