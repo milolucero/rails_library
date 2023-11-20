@@ -1,5 +1,11 @@
 <tr>
-  <td><%= image_tag book.image_small_thumbnail, size: "40x40", alt: book.title %></td>
+  <td>
+    <% if book.image.present? %>
+      <%=  image_tag(book.image.variant(resize_to_limit: [60, 60]), alt: book.title ) %>
+    <% else %>
+        <%= image_tag(book.image_small_thumbnail, size: "40x40", alt: book.title) %>
+    <% end %>
+  </td>
   <td><%= link_to book.title, book %></td>
   <td>
   <% book.categories.each do |category| %>
