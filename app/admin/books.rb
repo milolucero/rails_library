@@ -1,7 +1,7 @@
 ActiveAdmin.register Book do
   permit_params :title, :publisher_id, :published_date, :description, :isbn, :page_count,
                 :language, :image_small_thumbnail, :image_thumbnail, :preview_link, :search_info, :price, :is_on_sale, :sale_price,
-                book_categories_attributes: %i[id book_categories_id category_id _destroy], author_ids: []
+                book_categories_attributes: %i[id book_categories_id category_id _destroy], book_authors_attributes: %i[id book_authors_id author_id _destroy]
 
   # Set pagination
   config.paginate = true
@@ -23,10 +23,10 @@ ActiveAdmin.register Book do
     column :isbn
     column :page_count
     column :categories do |book|
-      book.categories.map(&:name).join(", ")
+      book.categories.map(&:name).join(", ").html_safe
     end
     column :authors do |book|
-      book.authors.map(&:name).join(", ")
+      book.authors.map(&:name).join(", ").html_safe
     end
     column :price
     column :is_on_sale
@@ -44,17 +44,13 @@ ActiveAdmin.register Book do
       row :isbn
       row :page_count
       row :categories do |book|
-        book.categories.map(&:name).join(", ")
+        book.categories.map(&:name).join(", ").html_safe
       end
       row :authors do |book|
-        book.authors.map(&:name).join(", ")
+        book.authors.map(&:name).join(", ").html_safe
       end
       row :image_thumbnail do
         image_tag(book.image_thumbnail, height: "300px") if book.image_thumbnail.present?
-      end
-
-      row :categories do
-        book.categories.map(&:name).join(", ")
       end
 
       row :price
@@ -74,10 +70,10 @@ ActiveAdmin.register Book do
       f.has_many :book_categories, allow_destroy: true do |n_f|
         n_f.input :category
       end
-      f.input :authors, as: :select, input_html: { multiple: true },
-  collection: Author.order("name asc")
+      f.has_many :book_authors, allow_destroy: true do |n_f|
+        n_f.input :author
+      end
     end
-
     f.actions
   end
 end
