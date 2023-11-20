@@ -13,8 +13,9 @@ class Book < ApplicationRecord
   has_many :book_orders
   has_many :orders, through: :book_orders
 
-  validates :title, presence: true
+  accepts_nested_attributes_for :book_categories, allow_destroy: true
 
+  validates :title, presence: true
   validates :published_date, :description, :isbn, :page_count, :language, presence:  true,
                                                                           allow_nil: false
 

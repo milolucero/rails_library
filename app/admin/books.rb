@@ -1,7 +1,7 @@
 ActiveAdmin.register Book do
   permit_params :title, :publisher_id, :published_date, :description, :isbn, :page_count,
                 :language, :image_small_thumbnail, :image_thumbnail, :preview_link, :search_info, :price, :is_on_sale, :sale_price,
-                category_ids: [], author_ids: []
+                book_categories_attributes: %i[id book_categories_id category_id _destroy], author_ids: []
 
   # Set pagination
   config.paginate = true
@@ -9,6 +9,7 @@ ActiveAdmin.register Book do
 
   # Index view of Books in ActiveAdmin Dashboard
   index do
+    selectable_column
     column :id
     column :image_thumbnail do |book|
       image_tag(book.image_thumbnail, height: "50px") if book.image_thumbnail.present?
@@ -70,8 +71,9 @@ ActiveAdmin.register Book do
     f.inputs do
       f.input :page_count
       f.input :image_thumbnail, as: :file
-      f.input :categories, as: :select, input_html: { multiple: true },
-  collection: Category.order("name asc")
+      f.has_many :book_categories, allow_destroy: true do |n_f|
+        n_f.input :category
+      end
       f.input :authors, as: :select, input_html: { multiple: true },
   collection: Author.order("name asc")
     end
