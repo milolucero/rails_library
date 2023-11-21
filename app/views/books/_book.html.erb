@@ -3,13 +3,44 @@
     <div class="card book-card">
       <div class="card-image">
         <figure class="image">
+          <% if book.is_on_sale? %>
+            <div class="book-sale-tag">-<%= (100 * (book.price - book.sale_price) / book.price).round(0) %>%</div>
+          <% end %>
           <%= image_tag book.image_small_thumbnail, alt: book.title %>
         </figure>
       </div>
-      <div class="card-content">
+      <div class="card-content px-0">
         <div class="content">
-          <p class="book-title is-6 pb-2 m-0"><%= book.title %></p>
-          <p class="book-authors pb-2"><%= book.authors.map{ |author| author.name }.join(", ") %></p>
+          <p class="book-title is-6 pb-1 m-0"><%= book.title %></p>
+          <p class="book-authors"><%= book.authors.map{ |author| author.name }.join(", ") %></p>
+          <%# Price %>
+          <div class="is-flex is-justify-content-space-between mb-3 is-align-content-end">
+            <% if book.sale_price.present? && book.is_on_sale %>
+              <span class="book-price book-sale-price"><%= number_to_currency(book.sale_price, unit: "$") %></span>
+            <% end %>
+            <% if book.price.present? %>
+              <span class="book-price book-regular-price <%= book.is_on_sale? ? "is-on-sale" : "" %>"><%= number_to_currency(book.price, unit: "$") %></span>
+            <% end %>
+          </div>
+          <%# Rating %>
+          <div class="book-rating mb-2">
+            <%# Full stars %>
+            <% Integer(Float(book.average_rating).floor()).times do %>
+              <i class="fas fa-solid fa-star has-text-warning"></i>
+            <% end %>
+            <%# Half star %>
+            <% if (Float(book.average_rating).round(1) % 1 >= 0.5) %>
+              <i class="fas fa-solid fa-star-half-stroke has-text-warning"></i>
+            <% elsif (Integer(Float(book.average_rating).floor()) != 5) %>
+              <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
+            <% end %>
+            <%# Empty stars %>
+            <% (4 - Integer(Float(book.average_rating).floor())).times do %>
+              <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
+            <% end %>
+            <% # Float(book.average_rating).round(1) %>
+            <span class="review-count ml-2"><%= book.reviews.count %> review<%= book.reviews.count == 1 ? "" : "s" %></span>
+          </div>
           <% book.categories.each do |category| %>
             <%= link_to "/categories/#{category.name}" do %>
               <span class="tag is-link is-light is-small"><%= category.name.gsub("_", " ").gsub("-", ",") %></span>

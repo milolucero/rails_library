@@ -15,23 +15,30 @@
  */
 
 .book-card {
-  border: 1px solid rgb(219, 218, 222);
+  border: none;
+  box-shadow: none !important;
   border-radius: 0.6rem !important;
   transition: all 0.1s ease-in-out;
   overflow: hidden;
-}
-
-.book-card:hover {
-  cursor: pointer;
-  transform: scale(1.02);
-  border: 1px solid rgb(219, 218, 222);
-  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
 .book-card .card-image {
   width: 100%;
   height: 18rem;
   overflow: hidden;
+  position: relative;
+}
+
+.book-sale-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #f44336;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 0 0 0 0.6rem;
 }
 
 .book-title,
@@ -48,4 +55,26 @@
 .book-authors {
   font-size: 0.9rem;
   font-weight: 400;
+}
+
+.book-price {
+  color: rgb(47, 47, 48);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.book-sale-price {
+}
+
+.book-regular-price.is-on-sale {
+  color: #bbb !important;
+  text-decoration: line-through;
+}
+
+.book-rating {
+  font-size: 0.8rem;
+}
+
+.review-count {
+  color: rgb(47, 47, 48);
 }
