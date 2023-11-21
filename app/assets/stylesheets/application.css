@@ -20,6 +20,7 @@
   border-radius: 0.6rem !important;
   transition: all 0.1s ease-in-out;
   overflow: hidden;
+  width: 100%;
 }
 
 .book-card .card-image {
@@ -39,6 +40,10 @@
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: 0 0 0 0.6rem;
+}
+
+.book-card .card-content {
+  padding: 1rem 0;
 }
 
 .book-title,

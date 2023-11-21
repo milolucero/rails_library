@@ -12,7 +12,7 @@
       <div class="card-content px-0">
         <div class="content">
           <p class="book-title is-6 pb-1 m-0"><%= book.title %></p>
-          <p class="book-authors"><%= book.authors.map{ |author| author.name }.join(", ") %></p>
+          <p class="book-authors mb-2"><%= book.authors.map{ |author| author.name }.join(", ") %></p>
           <%# Price %>
           <div class="is-flex is-justify-content-space-between mb-3 is-align-content-end">
             <% if book.sale_price.present? && book.is_on_sale %>
