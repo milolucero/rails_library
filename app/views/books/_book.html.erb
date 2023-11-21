@@ -1,0 +1,22 @@
+<%= link_to book do %>
+  <div class="column is-2">
+    <div class="card book-card">
+      <div class="card-image">
+        <figure class="image">
+          <%= image_tag book.image_small_thumbnail, alt: book.title %>
+        </figure>
+      </div>
+      <div class="card-content">
+        <div class="content">
+          <p class="book-title is-6 pb-2 m-0"><%= book.title %></p>
+          <p class="book-authors pb-2"><%= book.authors.map{ |author| author.name }.join(", ") %></p>
+          <% book.categories.each do |category| %>
+            <%= link_to "/categories/#{category.name}" do %>
+              <span class="tag is-link is-light is-small"><%= category.name.gsub("_", " ").gsub("-", ",") %></span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
