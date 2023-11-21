@@ -6,7 +6,7 @@
       <li><%= link_to "Books", books_path %></li>
       <li><%= link_to "Categories", categories_path %></li>
       <% if(@book.categories.any?) %>
-        <li><%= link_to @book.categories.first.name, "/categories/#{@book.categories.first.name}" %></li>
+        <li><%= link_to @book.categories.first.name.gsub("_", " ").gsub("-", ","), "/categories/#{@book.categories.first.name}" %></li>
       <% end %>
     </ul>
   </nav>
