@@ -5,25 +5,24 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-
     @reviews = @book.reviews
   end
 
   def search
-      @categories = Category.all
-      keywords = params[:keywords]
-      category_id = params[:category_id]
+    @categories = @all_categories
+    keywords = params[:keywords]
+    category_id = params[:category_id]
 
-      @books = Book.all
+    @books = Book.all
 
-      if keywords.present?
-        @books = @books.where("title LIKE ? OR description LIKE ?", "%#{keywords}%", "%#{keywords}%")
-      end
+    if category_id.present?
+        @books = @books.joins(:categories).where(book_categories: { category_id: category_id })
+    end
 
-      if category_id.present?
-        # Ensure you have the correct association name between Book and Category
-        @books = @books.joins(:categories).where(categories: { id: category_id })
-      end
+    if keywords.present?
+      @books = @books.where("title LIKE ? OR description LIKE ?", "%#{keywords}%", "%#{keywords}%")
+    end
 
+    @books = @books.page(params[:page]).per(12)
   end
 end

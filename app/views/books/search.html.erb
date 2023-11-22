@@ -2,7 +2,7 @@
   <div class="container">
     <h2 class="title is-size-3 mt-2 mb-5">Search results</h2>
       <p class="subtitle">
-        <%= (@books.count) %> book<%= @books.count == 1 ? "" : "s" %> found
+        <%= (@books.total_count) %> book<%= @books.total_count == 1 ? "" : "s" %> found
         <% if (params[:keywords] != "") %>
           for "<strong><%= params[:keywords]%></strong>"
         <% end %>
@@ -10,13 +10,10 @@
           in "<strong><%= @categories.find_by(id: params[:book][:category_id]).name %></strong>"
         <% end %>
       </p>
-    <!-- Refactor book table -->
-    <table class="table is-fullwidth">
-      <%= render partial: 'layouts/components/book_thead' %>
-      <tbody>
-        <%= render partial: 'layouts/components/book_tbody', collection: @books, as: :book %>
-      </tbody>
-    </table>
+     <div class="columns is-multiline">
+        <%= render @books %>
+      </div>
+    <%= paginate @books %>
   </div>
 </section>
 
