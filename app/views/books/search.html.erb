@@ -6,8 +6,8 @@
         <% if (params[:keywords] != "") %>
           for "<strong><%= params[:keywords]%></strong>"
         <% end %>
-        <% if (params[:book][:publisher_id] != "") %>
-          published by "<strong><%= @publishers.find_by(id: params[:book][:publisher_id]).name %></strong>"
+        <% if (params[:book][:category_id] != "") %>
+          in "<strong><%= @categories.find_by(id: params[:book][:category_id]).name %></strong>"
         <% end %>
       </p>
     <!-- Refactor book table -->
