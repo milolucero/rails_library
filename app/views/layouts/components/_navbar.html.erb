@@ -28,7 +28,17 @@
 		<%= link_to "About", about_path, class: "navbar-item" %>
 		</div>
 		<div class="navbar-end">
-		<%= render partial: "layouts/components/search_form" %>
+			<%= render partial: "layouts/components/search_form" %>
+			<div class="navbar-item">
+				<div class="buttons">
+					<a class="button is-link">
+						<span class="icon ml-1 mr-2" style="opacity: 0.8;">
+							<i class="fa-solid fa-cart-shopping mr-0"></i>
+						</span>
+						<strong>Cart <span class="tag is-link is-light is-rounded ml-1"><%= @cart.reduce(0) { |sum, item| sum + item["quantity"] } %></span></strong>
+					</a>
+				</div>
+			</div>
 		</div>
 	</div>
 	</div>
