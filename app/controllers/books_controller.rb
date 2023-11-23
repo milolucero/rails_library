@@ -44,6 +44,19 @@ class BooksController < ApplicationController
     redirect_to cart_path
   end
 
+  def update_quantity
+    id = params[:id].to_i
+    quantity = params[:quantity].to_i
+
+    book = @cart.find { |book_order| book_order["id"] == id }
+
+    if book
+      book["quantity"] = quantity
+    end
+
+    redirect_to cart_path
+  end
+
   def remove_from_cart
     id = params[:id].to_i
     quantity = params[:quantity].to_i
