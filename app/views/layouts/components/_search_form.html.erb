@@ -2,17 +2,12 @@
 	<div class="field has-addons has-addons-right columns is-gapless">
 	<p class="control column is-one-third">
 		<span class="select">
-			<%= collection_select(
-				:query,
-				:category_id,
-				Category.order(:name).map { |category| [category.name.gsub("_", " ").gsub("-", ","), category.id] },
-				:second,
-				:first,
-				{
-					include_blank: "All categories"
-				},
-				class: "select has-background-link-light"
-			) %>
+			<%= select_tag :category_id,
+				options_from_collection_for_select(
+					Category.order(:name),
+					:id,
+					->(category) { category.name.gsub("_", " ").gsub("-", ",") },
+					params[:category_id]), include_blank: "All categories", class: "select has-background-link-light" %>
 		</span>
 	</p>
 	<p class="control column is-two-fifths">

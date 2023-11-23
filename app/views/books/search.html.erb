@@ -6,8 +6,8 @@
         <% if (params[:keywords] != "") %>
           for "<strong><%= params[:keywords]%></strong>"
         <% end %>
-        <% if (params[:query][:category_id] != "") %>
-          in "<strong><%= @categories.find_by(id: params[:query][:category_id]).name %></strong>"
+        <% if (params[:category_id] != "") %>
+          in "<strong><%= @categories.find_by(id: params[:category_id]).name.gsub("_", " ").gsub("-", ",") %></strong>"
         <% end %>
       </p>
      <div class="columns is-multiline">
