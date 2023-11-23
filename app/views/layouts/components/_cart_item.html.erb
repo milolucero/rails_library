@@ -4,27 +4,44 @@
 
 <div class="card mb-3">
   <div class="card-content">
-    <div class="media">
-      <div class="media-left">
-        <% if book.is_on_sale? %>
-            <div class="book-sale-tag"><%= number_to_percentage((-100 * (1 - book.sale_price / book.price)), precision: 0) %></div>
-          <% end %>
-          <% if book.image.present? %>
-            <%=  image_tag(book.image.variant(resize_to_limit: [30, 30]), alt: book.title ) %>
-          <% elsif book.image_thumbnail.present? %>
-              <%= image_tag(book.image_thumbnail, size: "30x30", alt: book.title) %>
-          <% end %>
-      </div>
-      <div class="media-content">
-        <p class="title is-4"><%= book.title %></p>
-        <p class="subtitle is-6"><%= book.authors.map{ |author| author.name }.join(", ")%></p>
-      </div>
-    </div>
+	<div class="is-flex is-justify-content-space-between">
+		<div class="media mb-0">
+			<div class="media-left">
+				<% if book.image.present? %>
+					<%=  image_tag(book.image.variant(resize_to_limit: [30, 30]), alt: book.title ) %>
+				<% elsif book.image_thumbnail.present? %>
+					<%= image_tag(book.image_thumbnail, size: "30x30", alt: book.title) %>
+				<% end %>
+			</div>
+			<div class="media-content">
+				<p class="title is-5"><%= book.title %></p>
+				<p class="subtitle is-6"><%= book.authors.map{ |author| author.name }.join(", ")%></p>
+			</div>
+		</div>
+		<%# Price %>
+		<div class=" has-text-right">
+			<p class="book-price is-size-5 has-text-weight-bold">
+				<% if book.sale_price.present? && book.is_on_sale %>
+					<%= number_to_currency(book.sale_price, unit: "$") %>
+				<% else %>
+					<%= number_to_currency(book.price, unit: "$") %>
+				<% end %>
+			</p>
 
-    <div class="content">
-		<p>Quantity: <%= item["quantity"] %></p>
-	  <p>Unit price: <%= number_to_currency(unit_price, unit: "$") %></p>
-	  <p>Total price: <%= number_to_currency(total_price, unit: "$") %></p>
-    </div>
+			<%# List price and discount %>
+			<div class="is-size-7">
+				<% if book.sale_price.present? && book.is_on_sale %>
+					<p>List price: <s class="has-text-grey"><%= number_to_currency(book.price, unit: "$") %></s></p>
+					<p>Save: <%= number_to_currency(book.price - book.sale_price, unit: "$") %> (<%= number_to_percentage((-100 * (1 - book.sale_price / book.price)), precision: 0) %>)</p>
+				<% end %>
+			</div>
+			<p>Quantity: <%= item["quantity"] %></p>
+			<%= form_tag remove_from_cart_path, method: :delete do %>
+				<%= hidden_field_tag :id, item["id"] %>
+				<%= hidden_field_tag :quantity, item["quantity"] %>
+				<%= submit_tag "Remove from cart", class: "button is-small is-fullwidth is-danger is-outlined" %>
+			<% end %>
+		</div>
+	</div>
   </div>
 </div>

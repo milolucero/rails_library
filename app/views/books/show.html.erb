@@ -101,18 +101,7 @@
             <% end %>
           </div>
         </div>
-
         <p class="is-size-5 has-text-success-dark mb-1">In Stock</p>
-
-        <%= form_tag remove_from_cart_path, method: :delete do %>
-          <div class="is-flex">
-            <p class="pt-1">Quantity</p>
-            <%= select_tag :quantity, options_for_select(1..10), class: "select ml-2" %>
-          </div>
-          <%= hidden_field_tag :id, @book.id %>
-          <%= submit_tag "Remove from cart", class: "button is-fullwidth is-danger mt-4" %>
-        <% end %>
-
         <%= form_tag add_to_cart_path, method: :post do %>
           <div class="is-flex">
             <p class="pt-1">Quantity</p>
