@@ -5,9 +5,9 @@
 			<%= collection_select(
 				:query,
 				:category_id,
-				Category.order(:name),
-				:id,
-				:name,
+				Category.order(:name).map { |category| [category.name.gsub("_", " ").gsub("-", ","), category.id] },
+				:second,
+				:first,
 				{
 					include_blank: "All categories"
 				},
