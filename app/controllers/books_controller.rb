@@ -41,7 +41,7 @@ class BooksController < ApplicationController
       @cart << { id:, quantity: }
     end
 
-    redirect_to root_path
+    redirect_to cart_path
   end
 
   def remove_from_cart
@@ -61,6 +61,6 @@ class BooksController < ApplicationController
       end
     end
 
-    redirect_to root_path
+    redirect_to cart_path
   end
 end

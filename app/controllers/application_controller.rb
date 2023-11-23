@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
 
   def load_cart
     @cart = session[:cart]
+    @cart_item_count = @cart.reduce(0) { |sum, item| sum + item["quantity"] }
   end
 
   def set_variables

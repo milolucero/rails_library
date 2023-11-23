@@ -1,0 +1,30 @@
+<% book = Book.find(item["id"]) %>
+<% unit_price = book.is_on_sale ? book.sale_price : book.price %>
+<% total_price = unit_price * item["quantity"] %>
+
+<div class="card mb-3">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <% if book.is_on_sale? %>
+            <div class="book-sale-tag"><%= number_to_percentage((-100 * (1 - book.sale_price / book.price)), precision: 0) %></div>
+          <% end %>
+          <% if book.image.present? %>
+            <%=  image_tag(book.image.variant(resize_to_limit: [30, 30]), alt: book.title ) %>
+          <% elsif book.image_thumbnail.present? %>
+              <%= image_tag(book.image_thumbnail, size: "30x30", alt: book.title) %>
+          <% end %>
+      </div>
+      <div class="media-content">
+        <p class="title is-4"><%= book.title %></p>
+        <p class="subtitle is-6"><%= book.authors.map{ |author| author.name }.join(", ")%></p>
+      </div>
+    </div>
+
+    <div class="content">
+		<p>Quantity: <%= item["quantity"] %></p>
+	  <p>Unit price: <%= number_to_currency(unit_price, unit: "$") %></p>
+	  <p>Total price: <%= number_to_currency(total_price, unit: "$") %></p>
+    </div>
+  </div>
+</div>

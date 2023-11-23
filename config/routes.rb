@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'cart/index'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Root
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   # Cart
+  get "/cart", to: "cart#index", as: "cart"
   post "books/add_to_cart", to: "books#add_to_cart", as: "add_to_cart"
   delete "books/remove_from_cart", to: "books#remove_from_cart", as: "remove_from_cart"
 

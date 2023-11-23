@@ -1,0 +1,8 @@
+<section class = "section">
+	<div class="container">
+		<h1 class="title">Cart - <%= @cart_item_count %> items</h1>
+		<% @cart.each do |item| %>
+			<%= render partial: "layouts/components/cart_item", locals: { item: item } %>
+		<% end %>
+	</div>
+</div>
