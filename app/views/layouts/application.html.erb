@@ -13,6 +13,8 @@
   </head>
   <body>
     <%= render partial: 'layouts/components/navbar' %>
+    <%= debug session[:cart] %>
+    <p>You have visited this page: <%= @visit_count %></p>
     <%= yield %>
   </body>
 </html>

@@ -107,7 +107,7 @@
           <p class="pt-1">Quantity</p>
           <%= select_tag :quantity, options_for_select(1..10), class: "select ml-2" %>
         </div>
-        <%= link_to @book.preview_link, target: "_blank", class: "button is-fullwidth is-warning mt-4" do %>
+        <%= link_to add_to_cart_path(@book.id), data: { turbo_method: :post }, class: "button is-fullwidth is-warning mt-4" do %>
           <span class="icon" style="opacity: 0.7;">
             <i class="fa-solid fa-cart-plus mr-0"></i>
           </span>

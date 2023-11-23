@@ -16,7 +16,7 @@ class BooksController < ApplicationController
     @books = Book.all
 
     if category_id.present?
-        @books = @books.joins(:categories).where(book_categories: { category_id: category_id })
+      @books = @books.joins(:categories).where(book_categories: { category_id: category_id })
     end
 
     if keywords.present?
@@ -24,5 +24,10 @@ class BooksController < ApplicationController
     end
 
     @books = @books.page(params[:page]).per(12)
+  end
+
+  def add_to_cart
+    session[:cart] << params[:id]
+    redirect_to root_path
   end
 end
