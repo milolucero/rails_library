@@ -43,8 +43,7 @@
             <% (4 - Integer(Float(book.average_rating).floor())).times do %>
               <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
             <% end %>
-            <% # Float(book.average_rating).round(1) %>
-            <span class="review-count ml-2"><%= book.reviews.count %> review<%= book.reviews.count == 1 ? "" : "s" %></span>
+            <span class="review-count ml-2"><%= pluralize book.reviews.count, "review" %></span>
           </div>
           <% book.categories.each do |category| %>
             <%= link_to "/categories/#{category.name}" do %>
