@@ -2,7 +2,17 @@
 	<div class="field has-addons has-addons-right columns is-gapless">
 	<p class="control column is-one-third">
 		<span class="select">
-		<%= collection_select(:book, :category_id, Category.order(:name), :id, :name, {include_blank: "All categories"}, class: "select has-background-link-light") %>
+			<%= collection_select(
+				:query,
+				:category_id,
+				Category.order(:name),
+				:id,
+				:name,
+				{
+					include_blank: "All categories"
+				},
+				class: "select has-background-link-light"
+			) %>
 		</span>
 	</p>
 	<p class="control column is-two-fifths">

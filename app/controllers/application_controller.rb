@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_variables
 
-
   private
 
   def set_variables

@@ -2,12 +2,12 @@
   <div class="container">
     <h2 class="title is-size-3 mt-2 mb-5">Search results</h2>
       <p class="subtitle">
-        <%= (@books.total_count) %> book<%= @books.total_count == 1 ? "" : "s" %> found
+        <%= pluralize @books.total_count, "book"%> found
         <% if (params[:keywords] != "") %>
           for "<strong><%= params[:keywords]%></strong>"
         <% end %>
-        <% if (params[:book][:category_id] != "") %>
-          in "<strong><%= @categories.find_by(id: params[:book][:category_id]).name %></strong>"
+        <% if (params[:query][:category_id] != "") %>
+          in "<strong><%= @categories.find_by(id: params[:query][:category_id]).name %></strong>"
         <% end %>
       </p>
      <div class="columns is-multiline">
