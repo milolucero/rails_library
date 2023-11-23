@@ -1,0 +1,52 @@
+<%# Navbar %>
+<nav class="navbar is-light is-spaced has-shadow" role="navigation" aria-label="main navigation">
+	<div class="container">
+	<div class="navbar-brand">
+		<%# Logo image %>
+		<%= link_to root_path, class: "navbar-item" do %>
+		<%= image_tag "bookhub_logo.svg", alt: "BookHub Logo" %>
+		<% end %>
+		<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+		<span aria-hidden="true"></span>
+		<span aria-hidden="true"></span>
+		<span aria-hidden="true"></span>
+		</a>
+	</div>
+	<div id="navbarBasicExample" class="navbar-menu">
+		<div class="navbar-start ml-4">
+		<%= link_to "Home", root_path, class: "navbar-item" %>
+		<!-- Categories dropdown -->
+		<div class="navbar-item has-dropdown is-hoverable">
+			<a class="navbar-link">
+			Categories
+			</a>
+			<div class="navbar-dropdown">
+			<% @all_categories.each do |category| %>
+				<!-- replace underscore and hyphen in category.name back to spaces and comma for proper display-->
+				<%= link_to "#{category.name.gsub("_", " ").gsub("-", ",")} (#{category.book_count})", "/categories/#{category.name}", class: "navbar-item" %>
+			<% end %>
+			</div>
+		</div>
+		<%= link_to "About", about_path, class: "navbar-item" %>
+		</div>
+		<div class="navbar-end">
+		<!--Search form -->
+		<%= form_with(url: search_books_path, method: :get, local: true, class: "is-flex is-justify-content-flex-end") do %>
+			<div class="field has-addons has-addons-right columns is-gapless">
+			<p class="control column is-one-third">
+				<span class="select">
+				<%= collection_select(:book, :category_id, Category.order(:name), :id, :name, {include_blank: "All categories"}, class: "select has-background-link-light") %>
+				</span>
+			</p>
+			<p class="control column is-two-fifths">
+				<%= text_field_tag(:keywords, nil, class: "input", placeholder: "Search by title or description") %>
+			</p>
+			<p class="control">
+				<%= submit_tag("Search", class: "button is-info") %>
+			</p>
+			</div>
+		<% end %>
+		</div>
+	</div>
+	</div>
+</nav>
