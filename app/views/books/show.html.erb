@@ -12,49 +12,55 @@
   </nav>
   <%# Image and description %>
   <div class="columns">
+    <%# Book cover %>
     <div class="column is-one-fifth">
       <figure class="image">
+        <% if @book.is_on_sale? %>
+          <div class="book-sale-tag"><%= number_to_percentage((-100 * (1 - @book.sale_price / @book.price)), precision: 0) %></div>
+        <% end %>
         <% if @book.image.present? %>
           <%= image_tag(@book.image) %>
         <% else %>
           <%= image_tag(@book.image_thumbnail, alt: @book.title) %>
         <% end %>
       </figure>
-      <%= link_to @book.preview_link, target: "_blank", class: "button is-medium is-fullwidth is-warning mt-4" do %>
-        <span class="icon" style="opacity: 0.7;">
-          <i class="fa-brands fa-readme mr-6"></i>
+      <%= link_to @book.preview_link, target: "_blank", class: "button is-fullwidth is-link is-outlined mt-4" do %>
+        <span class="icon" style="opacity: 0.8;">
+          <i class="fa-brands fa-readme mr-0"></i>
         </span>
-        Open book
+        <span class="pl-2">Preview</span>
       <% end %>
     </div>
+    <%# Title, authors, categories, description %>
     <div class ="column">
       <div class="is-flex is-justify-content-space-between mb-3">
         <%# Title and subtitle %>
         <div>
           <h1 class="title has-text-info"><%= @book.title %></h1>
-          <h2 class="subtitle">By <%= @book.authors.map{ |author| author.name }.join(", ") %></h2>
+          <h2 class="subtitle is-6">By <%= @book.authors.map{ |author| author.name }.join(", ") %></h2>
         </div>
-        <%# Rating %>
-        <div>
-          <div class ="has-text-centered mb-2">
-            <span>Rating <strong><%= Float(@book.average_rating).round(1) %></strong></span>
-            <div class="ml-1">
-              <%# Full stars %>
-              <% Integer(Float(@book.average_rating).floor()).times do %>
-                <i class="fas fa-solid fa-star has-text-warning"></i>
-              <% end %>
-              <%# Half star %>
-              <% if (Float(@book.average_rating).round(1) % 1 >= 0.5) %>
-                <i class="fas fa-solid fa-star-half-stroke has-text-warning"></i>
-              <% elsif (Integer(Float(@book.average_rating).floor()) != 5) %>
-                <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
-              <% end %>
-              <%# Empty stars %>
-              <% (4 - Integer(Float(@book.average_rating).floor())).times do %>
-                <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
-              <% end %>
-            </div>
+      </div>
+      <%# Rating %>
+      <div>
+        <div class ="is-flex mb-2">
+          <span class="mr-2"><strong><%= Float(@book.average_rating).round(1) %></strong></span>
+          <div>
+            <%# Full stars %>
+            <% Integer(Float(@book.average_rating).floor()).times do %>
+              <i class="fas fa-solid fa-star has-text-warning"></i>
+            <% end %>
+            <%# Half star %>
+            <% if (Float(@book.average_rating).round(1) % 1 >= 0.5) %>
+              <i class="fas fa-solid fa-star-half-stroke has-text-warning"></i>
+            <% elsif (Integer(Float(@book.average_rating).floor()) != 5) %>
+              <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
+            <% end %>
+            <%# Empty stars %>
+            <% (4 - Integer(Float(@book.average_rating).floor())).times do %>
+              <i class="fas fa-regular fa-star has-text-grey-lighter"></i>
+            <% end %>
           </div>
+          <span class="ml-3"><%= pluralize @book.reviews.count, "review" %></span>
         </div>
       </div>
       <%# Categories %>
@@ -63,12 +69,48 @@
           <span class="mr-2 has-text-primary"><strong>CATEGORIES</strong></span>
           <% @book.categories.each do |category| %>
             <%= link_to "/categories/#{category.name}" do %>
-              <span class="tag is-link is-light is-medium"><%= category.name %></span>
+              <span class="tag is-link is-light is-medium"><%= category.name.gsub("_", " ").gsub("-", ",") %></span>
             <% end %>
           <% end %>
         <% end %>
       </h3>
       <p class="is-size-6"><%= @book.description %></p>
+    </div>
+    <%# Rating, Price, Purchase actions %>
+    <div class="column is-one-fifth">
+      <div class="purchase-info-container p-4">
+
+        <div class="has-text-right mb-6">
+          <%# Price %>
+          <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+            <div class="has-text-weight-bold is-size-6">Buy new:</div>
+            <div class="book-price is-size-4 has-text-danger-dark">
+              <% if @book.sale_price.present? && @book.is_on_sale %>
+                <%= number_to_currency(@book.sale_price, unit: "$") %>
+              <% else %>
+                <%= number_to_currency(@book.price, unit: "$") %>
+              <% end %>
+            </div>
+          </div>
+
+          <%# List price and discount %>
+          <div class="is-size-7">
+            <% if @book.sale_price.present? && @book.is_on_sale %>
+                <p>List price: <s class="has-text-grey"><%= number_to_currency(@book.price, unit: "$") %></s></p>
+                <p>Save: <%= number_to_currency(@book.price - @book.sale_price, unit: "$") %> (<%= number_to_percentage((-100 * (1 - @book.sale_price / @book.price)), precision: 0) %>)</p>
+            <% end %>
+          </div>
+        </div>
+        <p class="is-size-5 has-text-success-dark mb-1">In Stock</p>
+        <%= form_tag add_to_cart_path, method: :post do %>
+          <div class="is-flex">
+            <p class="pt-1">Quantity</p>
+            <%= select_tag :quantity, options_for_select(1..10), class: "select ml-2" %>
+          </div>
+          <%= hidden_field_tag :id, @book.id %>
+          <%= submit_tag "Add to cart", class: "button is-fullwidth is-warning mt-4" %>
+        <% end %>
+      </div>
     </div>
   </div>
   <%# Book details %>
@@ -76,37 +118,37 @@
     <%# Publisher %>
     <div class ="column is-one-fifth has-text-centered">
       <div class="icon is-medium has-text-info">
-        <i class="fas fa-2x fa-solid fa-house"></i>
+        <i class="fas fa-2x pb-3 fa-solid fa-house"></i>
       </div>
-      <p class = "is-size-5"> <%= @book.publisher.name %></p>
+      <p class = "is-size-6"> <%= @book.publisher.name %></p>
     </div>
     <%# Published date %>
     <div class ="column is-one-fifth has-text-centered">
       <div class="icon is-medium has-text-info">
-        <i class="fas fa-2x fa-solid fa-calendar-days"></i>
+        <i class="fas fa-2x pb-3 fa-solid fa-calendar-days"></i>
       </div>
-      <p class = "is-size-5"> <%= @book.published_date %></p>
+      <p class = "is-size-6"> <%= @book.published_date %></p>
     </div>
     <%# ISBN %>
     <div class ="column is-one-fifth has-text-centered">
       <div class="icon is-medium has-text-info">
-        <i class=" fas fa-2x fa-solid fa-barcode"></i>
+        <i class=" fas fa-2x pb-3 fa-solid fa-barcode"></i>
       </div>
-      <p class = "is-size-5"> <%= @book.isbn %></p>
+      <p class = "is-size-6"> <%= @book.isbn %></p>
     </div>
     <%# Page count %>
     <div class ="column is-one-fifth has-text-centered">
       <div class="icon is-medium has-text-info">
-        <i class=" fas fa-2x fa-solid fa-book-open"></i>
+        <i class=" fas fa-2x pb-3 fa-solid fa-book-open"></i>
       </div>
-      <p class = "is-size-5"> <%= @book.page_count %> pages</p>
+      <p class = "is-size-6"> <%= @book.page_count %> pages</p>
     </div>
     <%# Language %>
     <div class="column is-one-fifth has-text-centered">
       <div class="icon is-medium has-text-info">
-        <i class="fas fa-2x fa-language"></i>
+        <i class="fas fa-2x pb-3 fa-language"></i>
       </div>
-      <p class="is-size-5"><%= @book.language == "en" ? "English" : @book.language %></p>
+      <p class="is-size-6"><%= @book.language == "en" ? "English" : @book.language %></p>
     </div>
   </div>
   <%# Reviews %>

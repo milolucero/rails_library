@@ -62,7 +62,7 @@
   font-weight: 400;
 }
 
-.book-price {
+.book-card .book-price {
   color: rgb(47, 47, 48);
   font-size: 1.2rem;
   font-weight: 500;
@@ -84,3 +84,8 @@
   color: rgb(47, 47, 48);
 }
 
+.purchase-info-container {
+  background-color: #f5f5f5;
+  border: 1px solid #eaeaea;
+  border-radius: 0.5rem;
+}
