@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   end
 
   # Cart
-  post "books/add_to_cart/:id", to: "books#add_to_cart", as: "add_to_cart"
-  delete "books/remove_from_cart/:id", to: "books#remove_from_cart", as: "remove_from_cart"
+  post "books/add_to_cart", to: "books#add_to_cart", as: "add_to_cart"
+  delete "books/remove_from_cart", to: "books#remove_from_cart", as: "remove_from_cart"
 
   # Categories
   get "/categories", to: "categories#index"

@@ -103,15 +103,23 @@
         </div>
 
         <p class="is-size-5 has-text-success-dark mb-1">In Stock</p>
-        <div class="is-flex">
-          <p class="pt-1">Quantity</p>
-          <%= select_tag :quantity, options_for_select(1..10), class: "select ml-2" %>
-        </div>
-        <%= link_to add_to_cart_path(@book.id), data: { turbo_method: :post }, class: "button is-fullwidth is-warning mt-4" do %>
-          <span class="icon" style="opacity: 0.7;">
-            <i class="fa-solid fa-cart-plus mr-0"></i>
-          </span>
-          <span class="pl-2">Add to cart</span>
+
+        <%= form_tag remove_from_cart_path, method: :delete do %>
+          <div class="is-flex">
+            <p class="pt-1">Quantity</p>
+            <%= select_tag :quantity, options_for_select(1..10), class: "select ml-2" %>
+          </div>
+          <%= hidden_field_tag :id, @book.id %>
+          <%= submit_tag "Remove from cart", class: "button is-fullwidth is-danger mt-4" %>
+        <% end %>
+
+        <%= form_tag add_to_cart_path, method: :post do %>
+          <div class="is-flex">
+            <p class="pt-1">Quantity</p>
+            <%= select_tag :quantity, options_for_select(1..10), class: "select ml-2" %>
+          </div>
+          <%= hidden_field_tag :id, @book.id %>
+          <%= submit_tag "Add to cart", class: "button is-fullwidth is-warning mt-4" %>
         <% end %>
       </div>
     </div>
