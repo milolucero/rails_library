@@ -1,0 +1,20 @@
+<%= form_with(url: search_books_path, method: :get, local: true, class: "is-flex is-justify-content-flex-end") do %>
+	<div class="field has-addons has-addons-right columns is-gapless">
+	<p class="control column is-one-third">
+		<span class="select">
+			<%= select_tag :category_id,
+				options_from_collection_for_select(
+					Category.order(:name),
+					:id,
+					->(category) { category.name.gsub("_", " ").gsub("-", ",") },
+					params[:category_id]), include_blank: "All categories", class: "select has-background-link-light" %>
+		</span>
+	</p>
+	<p class="control column is-two-fifths">
+		<%= text_field_tag(:keywords, nil, class: "input", placeholder: "Search by title or description") %>
+	</p>
+	<p class="control">
+		<%= submit_tag("Search", class: "button is-info") %>
+	</p>
+	</div>
+<% end %>
