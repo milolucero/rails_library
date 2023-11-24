@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pages/show'
   get 'cart/index'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
   get "/categories", to: "categories#index"
   get "/categories/:category_name", to: "categories#show"
 
-  # About
-  get "/about", to: "about#index"
+  # About & Contact pages
+  get "pages/:slug", to: 'pages#show', as: 'regular_page'
 end
+
