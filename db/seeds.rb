@@ -16,6 +16,7 @@ Author.destroy_all
 Category.destroy_all
 Publisher.destroy_all
 AdminUser.destroy_all
+Page.destroy_all
 # SaleInfo.destroy_all
 
 # Reset the auto-Increment counter for the primary key.
@@ -194,3 +195,7 @@ if Rails.env.development?
   AdminUser.create!(email: "admin@bookhub.com", password: "password",
                     password_confirmation: "password")
 end
+
+# Add About and Contact pages
+Page.create(title: 'About Us', content: 'This is the about page content.', slug: 'about')
+Page.create(title: 'Contact Us', content: 'This is the contact page content.', phone: '123-456-7890', email: 'info@bookhub.com', address: "1111 Main Street, Winnipeg, MB, R1T 1T9", slug: 'contact')
