@@ -113,6 +113,8 @@ GEM
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
     formtastic_i18n (0.7.0)
+    friendly_id (5.5.1)
+      activerecord (>= 4.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     has_scope (0.8.2)
@@ -294,6 +296,7 @@ DEPENDENCIES
   debug
   devise
   faker
+  friendly_id
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

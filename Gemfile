@@ -45,8 +45,12 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
  gem "sassc-rails"
 
+# Active Admin
 gem 'activeadmin', '2.11'
 gem 'devise'
+
+# To handle slugs
+gem 'friendly_id'
 
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
