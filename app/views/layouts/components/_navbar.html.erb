@@ -25,7 +25,8 @@
 			<% end %>
 			</div>
 		</div>
-		<%= link_to "About", about_path, class: "navbar-item" %>
+		<%= link_to 'About', regular_page_path('about'), class: "navbar-item" %>
+		<%= link_to 'Contact Us', regular_page_path('contact'), class: "navbar-item" %>
 		</div>
 		<div class="navbar-end">
 			<%= render partial: "layouts/components/search_form" %>

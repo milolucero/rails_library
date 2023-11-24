@@ -1,0 +1,21 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title"><%= @page.title %></h1>
+    <div class="content">
+      <%= @page.content.html_safe %>
+    </div>
+
+    <% if @is_contact_page %>
+      <div class="columns">
+        <div class="column">
+          <p class="subtitle">Phone:</p>
+          <p><%= @page.phone %></p>
+        </div>
+        <div class="column">
+          <p class="subtitle">Email:</p>
+          <p><%= @page.email %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>
