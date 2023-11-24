@@ -7,13 +7,34 @@
     <% if @is_contact_page %>
      <div class="columns p-4 ">
 
-        <div class="column  is-one-quarter box mr-6">
-          <%= render partial: 'layouts/components/contact_info' %>
+      <div class="column  is-one-quarter box mr-6">
+        <%= render partial: 'layouts/components/contact_info' %>
         </div>
          <div class="column box ml-6">
             <%= render partial: 'layouts/components/contact_form' %>
          </div>
-    </div>
+      </div>
+
+    <% else %>
+      <div class = "columns ">
+        <div class= "column is-half">
+          <h2 class="subtitle mt-5 has-text-info">Our Journey</h2>
+            <p >BookHub is a small family-owned business located in the heart of Winnipeg, Manitoba. Our journey began three years ago with a simple dream - to share our love for books with the community. This dream led us to establish a physical bookstore that quickly became a beloved place for book enthusiasts across the city.</p>
+            <p>At present, BookHub has grown into a team of eight passionate individuals, all contributing to the development of our beloved BookHub.</p>
+
+            <h2 class="subtitle mt-5 has-text-info">Our Purpose</h2>
+            <p>Specializing in a wide range of books, including fiction, non-fiction, self-help, educational, and rare collector's items, BookHub's mission has always been to provide a welcoming and knowledgeable space. While our physical store continues to be a source of joy for the local folks, our next step in evolution is becoming an e-commerce platform.</p>
+            <p>This online resource will enable book enthusiasts, not only in Winnipeg but across Canada, to effortlessly access a diverse range of literary treasures. Our new site allows customers to browse through our extensive collection with ease, offering a seamless online shopping experience. Explore books by categories, reviews, and publishers.</p>
+
+            <h2 class="subtitle mt-5 has-text-info">Our Target Demographic</h2>
+            <p>At BookHub, we aim to target a diverse range of customers, including book enthusiasts of all ages, students, professionals, and children. We believe in the power of books to inspire, educate, and bring joy, and we're excited to share our passion with you.</p>
+        </div>
+        <div class="column is-half has-text-centered">
+          <figure>
+              <%= image_tag 'bookhub.jpg', class: 'image mt-0' %>
+          </figure>
+        </div>
+      </div>
     <% end %>
   </div>
 </section>

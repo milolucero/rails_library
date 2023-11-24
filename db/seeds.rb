@@ -197,5 +197,5 @@ if Rails.env.development?
 end
 
 # Add About and Contact pages
-Page.create(title: 'About Us', content: 'This is the about page content.', slug: 'about')
-Page.create(title: 'Contact Us', content: 'This is the contact page content.', phone: '123-456-7890', email: 'info@bookhub.com', address: "1111 Main Street, Winnipeg, MB, R1T 1T9", slug: 'contact')
+Page.create(title: 'About Us', content: 'Welcome to BookHub, your go-to destination for literary treasures!', slug: 'about')
+Page.create(title: 'Contact Us', content: 'Have questions or need assistance? Reach out to us!', phone: '+1(204)220-9999', email: 'info@bookhub.com', address: "1111 Main Street, Winnipeg, MB, R1T 1T9", slug: 'contact')
