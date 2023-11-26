@@ -11,7 +11,7 @@ ActiveAdmin.register Page do
    form do |f|
     f.inputs do
       f.input :title
-      f.input :content
+      f.input :content, as: :quill_editor, input_html: { data: { options: { theme: 'snow', placeholder: 'Write something...', modules: { toolbar: [['bold', 'italic', 'underline', 'strike'], ['blockquote', 'code-block'], [{ 'header': 1 }, { 'header': 2 }], [{ 'list': 'ordered' }, { 'list': 'bullet' }], [{ 'script': 'sub' }, { 'script': 'super' }], [{ 'indent': '-1' }, { 'indent': '+1' }], [{ 'direction': 'rtl' }], [{ 'size': ['small', false, 'large', 'huge'] }], [{ 'color': [] }, { 'background': [] }], [{ 'font': [] }], [{ 'align': [] }], ['link', 'image', 'video'], ['clean']] } } } }
       if f.object.slug == 'contact'
         f.input :phone
         f.input :email
