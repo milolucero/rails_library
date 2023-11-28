@@ -15,12 +15,12 @@ class BooksController < ApplicationController
 
     @books = Book.all
 
-    if category_id.present?
-      @books = @books.joins(:categories).where(book_categories: { category_id: category_id })
-    end
-
     if keywords.present?
       @books = @books.where("title LIKE ? OR description LIKE ?", "%#{keywords}%", "%#{keywords}%")
+    end
+
+    if category_id.present?
+      @books = @books.joins(:categories).where(book_categories: { category_id: category_id })
     end
 
     @books = @books.page(params[:page]).per(12)

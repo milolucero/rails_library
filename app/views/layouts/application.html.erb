@@ -13,8 +13,19 @@
   </head>
   <body>
     <%= render partial: 'layouts/components/navbar' %>
-   <p class="notice"><%= notice %></p>
-   <p class="alert"><%= alert %></p>
+<% if notice.present? %>
+  <div class="notification is-primary">
+    <button class="delete"></button>
+    <%= notice %>
+  </div>
+<% end %>
+
+<% if alert.present? %>
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <%= alert %>
+  </div>
+<% end %>
     <%= yield %>
   </body>
 </html>
