@@ -1,26 +1,50 @@
-<h2>Log in</h2>
+<div class="container" >
+  <div class="columns mt-4">
+    <div class="column is-half is-offset-one-quarter box p-5">
+      <h2 class="title has-text-centered  has-text-info">Log in </h2>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+        <div class="field">
+          <%= f.label :email, class: 'label' %>
+          <div class="control has-icons-left">
+            <%= f.email_field :email, class: 'input', autocomplete: "email", placeholder: "sarah.brown@mail.com" %>
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+        </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+        <div class="field">
+          <%= f.label :password, class: 'label' %>
+          <div class="control has-icons-left">
+            <%= f.password_field :password, class: 'input', autocomplete: "current-password", placeholder: "1Y125tyi" %>
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="field">
+            <div class="control">
+              <%= f.check_box :remember_me, class: 'mr-2' %>
+              <%= f.label :remember_me, class: "checkbox"  %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="actions">
+          <div class="control">
+            <%= f.submit "Log in", class: 'button is-info is-medium is-fullwidth mb-3' %>
+          </div>
+        </div>
+      <% end %>
+        <%= render "users/shared/links" %>
     </div>
-  <% end %>
+   </div>
+</div>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
 
-<%= render "users/shared/links" %>
+
+
