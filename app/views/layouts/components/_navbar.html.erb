@@ -45,24 +45,14 @@
 						<span class ="icon ">
 							<i class="fa-solid fa-user fa-lg"></i>
 						</span>
-						<% if user_signed_in? %>
-      				<span class = "mr-1"><a href="#">
-        				My orders
-      				</a>
-							</span>
-      				<span class = "ml-1">
-								<a href="<%= destroy_user_session_path %>" data-method="delete">
-									Sign out
-								</a>
-      				</span>
-   					<% else %>
-							<span class = "mr-1">
-								<%= link_to 'Sign up', new_user_registration_path %>
-							</span>  |
-							<span class = "ml-1">
-								<%= link_to 'Log in', new_user_session_path %>
-							</span>
-    					<% end %>
+							<% if current_user %>
+									<%= link_to current_user.username, edit_user_registration_path, class: "" %>
+									<%= button_to "Log out", destroy_user_session_path, method: :delete, class: "button is-warning is-small ml-2 is-rounded" %>
+							<% else %>
+								<%= link_to "Log in", new_user_session_path,  class: "mr-2"%>
+								<span> | </span>
+								<%= link_to "Register", new_user_registration_path, class: "ml-2" %>
+							<% end %>
 					 </span>
 		   	</div>
 			</div>
