@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   before_action :set_variables
   before_action :load_cart
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   private
 
   def initialize_session
@@ -19,4 +21,17 @@ class ApplicationController < ActionController::Base
     @all_categories = Category.joins(:books).group("categories.id").select("categories.*, COUNT(books.id) AS book_count").order(:name)
     @publishers = Publisher.all
   end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :first_name, :last_name, :email,:password,:address, :city, :province_id, :postal_code])
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_in) do |user_params|
+      user_params.permit(:username, :email)
+    end
+  end
+
 end

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    passwords: 'users/passwords',
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations',
+  }
+
   get 'pages/show'
   get 'cart/index'
   devise_for :admin_users, ActiveAdmin::Devise.config
