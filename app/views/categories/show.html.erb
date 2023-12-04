@@ -4,17 +4,18 @@
     <ul>
       <li><%= link_to "Books", books_path %></li>
       <li><%= link_to "Categories", categories_path %></li>
-      <!-- Fix category name for HTML validation & proper display -->
       <li class="is-active"><a href="#" aria-current="page"><%= @category.name.gsub("_", " ").gsub("-", ",") %></a></li>
     </ul>
   </nav>
-  <!-- Fix category name for HTML validation & proper display -->
-  <h1 class="title"><%= @category.name.gsub("_", " ").gsub("-", ",") %></h1>
-    <!-- Refactor book table -->
-    <table class="table is-fullwidth">
-      <%= render partial: 'layouts/components/book_thead' %>
-      <tbody>
-        <%= render partial: 'layouts/components/book_tbody', collection: @books, as: :book %>
-      </tbody>
-    </table>
+  <div class="columns">
+    <div class="column is-one-fifth">
+      <%= render partial: "layouts/components/categories_side_bar" %>
+    </div>
+    <div class="column is-four-fifths">
+      <h1 class="title"><%= @category.name.gsub("_", " ").gsub("-", ",") %></h1>
+      <div class="columns is-multiline">
+        <%= render @books %>
+      </div>
+    </div>
+  </div>
 </div>
