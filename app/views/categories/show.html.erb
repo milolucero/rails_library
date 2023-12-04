@@ -12,7 +12,9 @@
       <%= render partial: "layouts/components/categories_side_bar" %>
     </div>
     <div class="column is-four-fifths">
-      <h1 class="title"><%= @category.name.gsub("_", " ").gsub("-", ",") %></h1>
+      <div class="is-flex is-justify-content-space-between mb-5">
+        <h1 class="title"><%= @category.name.gsub("_", " ").gsub("-", ",") %></h1>
+      </div>
       <div class="columns is-multiline">
         <%= render @books %>
       </div>
