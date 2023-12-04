@@ -1,5 +1,5 @@
 <%= link_to book do %>
-  <div class="column is-2">
+  <div class="column is-one-fifth">
     <div class="card book-card">
       <div class="card-image">
         <figure class="image">
@@ -9,7 +9,7 @@
           <% if book.image.present? %>
             <%=  image_tag(book.image.variant(resize_to_limit: [300, 300]), alt: book.title ) %>
           <% elsif book.image_thumbnail.present? %>
-              <%= image_tag(book.image_thumbnail, size: "300x300", alt: book.title) %>
+            <%= image_tag(book.image_thumbnail, size: "300x300", alt: book.title) %>
           <% end %>
         </figure>
       </div>

@@ -1,14 +1,21 @@
 <section class = "section">
   <div class="container">
-    <div class="is-flex is-justify-content-space-between">
-      <h1 class="title">Books</h1>
-      <%= link_to categories_path, class: "button is-info" do %>
-        View all categories
-      <% end %>
+    <div class="columns">
+      <div class="column is-one-fifth">
+        <%= render partial: "layouts/components/categories_side_bar" %>
+      </div>
+      <div>
+        <div class="column is-flex is-justify-content-space-between">
+          <h1 class="title">Books</h1>
+          <%= link_to categories_path, class: "button is-info" do %>
+            View all categories
+          <% end %>
+        </div>
+        <div class="columns is-multiline">
+          <%= render @books %>
+        </div>
+        <%= paginate @books %>
+      </div>
     </div>
-    <div class="columns is-multiline">
-      <%= render @books %>
-    </div>
-    <%= paginate @books %>
   </div>
 </section>

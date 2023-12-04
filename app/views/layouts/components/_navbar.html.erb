@@ -1,66 +1,55 @@
 <nav class="navbar is-light is-spaced has-shadow" role="navigation" aria-label="main navigation">
-	<div class="container">
-	<div class="navbar-brand">
-		<%# Logo image %>
-		<%= link_to root_path, class: "navbar-item" do %>
-		<%= image_tag "bookhub_logo.svg", alt: "BookHub Logo" %>
-		<% end %>
-		<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-		<span aria-hidden="true"></span>
-		<span aria-hidden="true"></span>
-		<span aria-hidden="true"></span>
-		</a>
-	</div>
-	<div id="navbarBasicExample" class="navbar-menu">
-		<div class="navbar-start ml-4">
-			<%= link_to "Home", root_path, class: "navbar-item" %>
-			<!-- Categories dropdown -->
-			<div class="navbar-item has-dropdown is-hoverable">
-				<a class="navbar-link">
-				Categories
-				</a>
-				<div class="navbar-dropdown">
-					<% @all_categories.each do |category| %>
-						<%= link_to "#{category.name.gsub("_", " ").gsub("-", ",")} (#{category.book_count})", "/categories/#{category.name}", class: "navbar-item" %>
-					<% end %>
-				</div>
-			</div>
-				<%= link_to 'About', regular_page_path('about'), class: "navbar-item" %>
-				<%= link_to 'Contact Us', regular_page_path('contact'), class: "navbar-item" %>
-		</div>
-		<div class="navbar-end">
-			<%= render partial: "layouts/components/search_form" %>
-				<div class="navbar-item">
-					<div class="buttons">
-						<%= link_to cart_path, class: "button is-link" do %>
-							<span class="icon ml-1 mr-2" style="opacity: 0.8;">
-								<i class="fa-solid fa-cart-shopping mr-0"></i>
-							</span>
-							<strong>Cart <span class="tag is-link is-light is-rounded ml-1"><%= @cart_item_count %></span></strong>
-						<% end %>
-					</div>
-				</div>
+  <div class="container">
+    <div class="navbar-brand">
+      <%# Logo image %>
+      <%= link_to root_path, class: "navbar-item" do %>
+        <%= image_tag "bookhub_logo.svg", alt: "BookHub Logo" %>
+      <% end %>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start ml-4">
+        <%= link_to "Home", root_path, class: "navbar-item" %>
+        <%= link_to 'About', regular_page_path('about'), class: "navbar-item" %>
+        <%= link_to 'Contact', regular_page_path('contact'), class: "navbar-item" %>
+      </div>
+      <div class="navbar-end">
+        <%= render partial: "layouts/components/search_form" %>
+        <div class="navbar-item">
+          <div class="buttons">
+            <%= link_to cart_path, class: "button is-link" do %>
+              <span class="icon ml-1 mr-2" style="opacity: 0.8;">
+                <i class="fa-solid fa-cart-shopping mr-0"></i>
+              </span>
+              <strong>Cart <span class="tag is-link is-light is-rounded ml-1"><%= @cart_item_count %></span></strong>
+            <% end %>
+          </div>
+        </div>
         <div class ="navbar-item has-text-centered ">
-				 	<span class ="icon-text">
-						<span class ="icon ">
-							<i class="fa-solid fa-user fa-lg"></i>
-						</span>
-							<% if current_user %>
-								<%= link_to current_user.username, edit_user_registration_path, class: "" %>
-								<%= button_to destroy_user_session_path, method: :delete, class: "button is-warning is-small ml-2 is-rounded" do %>
-        					<span class="icon">
-          					<i class="fas fa-sign-out-alt"></i>
-        					</span>
-        					<span>Log out</span>
-      				<% end %>
-							<% else %>
-								<%= link_to "Log in", new_user_session_path,  class: "mr-2"%>
-								<span> | </span>
-								<%= link_to "Register", new_user_registration_path, class: "ml-2" %>
-							<% end %>
-					 </span>
-		   	</div>
-			</div>
-		</div>
-	</div>
+          <span class ="icon-text">
+            <span class ="icon ">
+              <i class="fa-solid fa-user fa-lg"></i>
+            </span>
+            <% if current_user %>
+              <%= link_to current_user.username, edit_user_registration_path, class: "" %>
+              <%= button_to destroy_user_session_path, method: :delete, class: "button is-warning is-small ml-2 is-rounded" do %>
+                <span class="icon">
+                  <i class="fas fa-sign-out-alt"></i>
+                </span>
+                <span>Log out</span>
+              <% end %>
+            <% else %>
+              <%= link_to "Log in", new_user_session_path,  class: "mr-2"%>
+              <span> | </span>
+              <%= link_to "Register", new_user_registration_path, class: "ml-2" %>
+            <% end %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </nav>

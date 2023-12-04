@@ -1,0 +1,13 @@
+<aside class="menu">
+  <p class="menu-label">
+    Categories
+  </p>
+  <ul class="menu-list">
+    <% @all_categories.each do |category| %>
+      <li>
+        <%= link_to "#{category.name.gsub("_", " ").gsub("-", ",")}", "/categories/#{category.name}" %>
+        <% #" (#{category.book_count})" %>
+      </li>
+    <% end %>
+  </ul>
+</aside>

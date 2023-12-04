@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   def index
-    @books = Book.page(params[:page]).per(12)
+    @books = Book.page(params[:page]).per(20)
   end
 
   def show
@@ -23,7 +23,7 @@ class BooksController < ApplicationController
       @books = @books.joins(:categories).where(book_categories: { category_id: category_id })
     end
 
-    @books = @books.page(params[:page]).per(12)
+    @books = @books.page(params[:page]).per(20)
   end
 
   def add_to_cart
