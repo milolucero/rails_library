@@ -18,7 +18,7 @@
       <div class="column is-one-fifth">
         <div class="purchase-info-container p-4">
           <div class="is-flex is-justify-content-space-between is-align-items-baseline">
-            <div class="is-size-6">Subtotal (<%= @cart_item_count %> items)</div>
+            <div class="is-size-6">Subtotal (<%= pluralize(@cart_item_count, 'item') %>)</div>
             <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @cart_subtotal, unit: "$" %></div>
           </div>
           <div class="is-flex is-justify-content-space-between is-align-items-baseline">

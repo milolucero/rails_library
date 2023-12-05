@@ -19,14 +19,14 @@
             <%= render partial: "layouts/components/cart_item", locals: { item: item } %>
           <% end %>
           <div class="is-flex is-justify-content-end is-align-items-baseline">
-            <div class="has-text-weight-bold is-size-5 pr-4 ">Subtotal (<%= @cart_item_count %> items):</div>
+            <div class="has-text-weight-bold is-size-5 pr-4 ">Subtotal (<%= pluralize(@cart_item_count, 'item') %>):</div>
             <div class="is-size-4 has-text-danger-dark"><%= number_to_currency @cart_subtotal, unit: "$" %></div>
           </div>
         </div>
         <div class="column is-one-fifth">
           <div class="purchase-info-container p-4">
             <div class="is-flex is-justify-content-space-between is-align-items-baseline">
-              <div class="is-size-6">Subtotal (<%= @cart_item_count %> items):</div>
+              <div class="is-size-6">Subtotal (<%= pluralize(@cart_item_count, 'item') %>):</div>
               <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @cart_subtotal, unit: "$" %></div>
             </div>
             <%= link_to checkout_path, class: "button is-fullwidth is-link is-warning mt-4" do %>
