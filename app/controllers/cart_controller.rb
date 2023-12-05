@@ -18,6 +18,19 @@ class CartController < ApplicationController
     @cart_total = @cart_subtotal + @total_taxes
   end
 
+  # Create, Cancel and Success actions for Stripe integration
+  def create
+    # code to create a new checkout
+  end
+
+  def cancel
+    # code to cancel the checkout
+  end
+
+  def success
+    # code to handle successful checkout
+  end
+
   private
 
   def set_cart_subtotal
