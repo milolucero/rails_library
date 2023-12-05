@@ -1,0 +1,37 @@
+<div class="mb-5">
+  <p class="menu-label">Filters</p>
+  <%= form_tag(request.path,  method: 'get', id: 'filter-form') do %>
+    <ul class = "menu-list">
+      <li class="field">
+        <label class="checkbox">
+          <%= check_box_tag :on_sale, 1, params[:on_sale].present?, class: 'filter-checkbox'%>
+          <span class= "ml-1">On Sale</span>
+        </label>
+      </li>
+      <li class="field">
+        <label class="checkbox">
+          <%= check_box_tag :new, 2, params[:new].present? , class: 'filter-checkbox'%>
+          <span class= "ml-1"> New</span>
+        </label>
+      </li>
+      <li class="field">
+        <label class="checkbox">
+          <%= check_box_tag :recently_updated, 1, params[:recently_updated].present?, class: 'filter-checkbox'%>
+          <span class= "ml-1">Recently updated</span>
+        </label>
+      </li>
+    </ul>
+  <% end %>
+</div>
+<script>
+  document.addEventListener("turbo:load", function() {
+    const filterForm = document.getElementById('filter-form');
+    const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+
+    filterCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        filterForm.submit();
+      });
+    });
+  });
+</script>

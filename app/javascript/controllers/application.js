@@ -24,3 +24,14 @@ $(document).ready(function() {
   }, 5000);
 });
 
+
+document.addEventListener("DOMContentLoaded", function() {
+  const filterForm = document.getElementById('filter-form');
+  const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+
+  filterCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      filterForm.submit();
+    });
+  });
+});
