@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   post "books/add_to_cart", to: "books#add_to_cart", as: "add_to_cart"
   post 'books/update_quantity', to: 'books#update_quantity', as: 'update_quantity'
   delete "books/remove_from_cart", to: "books#remove_from_cart", as: "remove_from_cart"
+  get 'cart/checkout', to: 'cart#checkout', as: "checkout"
 
   # Categories
   get "/categories", to: "categories#index"
@@ -33,4 +34,3 @@ Rails.application.routes.draw do
   # About & Contact pages
   get "pages/:slug", to: 'pages#show', as: 'regular_page'
 end
-
