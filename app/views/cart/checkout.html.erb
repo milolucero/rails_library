@@ -42,6 +42,12 @@
             <div class="is-size-4">Total</div>
             <div class="is-size-4 has-text-danger-dark"><%= number_to_currency @cart_total, unit: "$" %></div>
           </div>
+          <%= form_with url:checkout_create_path, remote: true do %>
+            <% # hidden_field_tag(:product_id, product.id) %>
+            <%= button_tag 'Test 1' %>
+          <% end %>
+          <%= link_to "Success page", checkout_success_path, class: "button is-fullwidth is-link is-warning mt-4" %>
+          <%= link_to "Cancel page", checkout_cancel_path, class: "button is-fullwidth is-link is-warning mt-4" %>
           <%= button_to "Proceed to Payment", checkout_path, class: "button is-fullwidth is-link is-warning mt-4" %>
         </div>
       </div>
