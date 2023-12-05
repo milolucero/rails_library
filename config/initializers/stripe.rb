@@ -4,3 +4,4 @@ Rails.configuration.stripe = {
 }
 
 Stripe.api_key = Rails.configuration.stripe[:secret_key]
+# Stripe.api_version = '2020-08-27'

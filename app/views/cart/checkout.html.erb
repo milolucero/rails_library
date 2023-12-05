@@ -42,9 +42,7 @@
             <div class="is-size-4">Total</div>
             <div class="is-size-4 has-text-danger-dark"><%= number_to_currency @cart_total, unit: "$" %></div>
           </div>
-          <%= link_to checkout_path, class: "button is-fullwidth is-link is-warning mt-4" do %>
-            Proceed to Payment
-          <% end %>
+          <%= button_to "Proceed to Payment", checkout_path, class: "button is-fullwidth is-link is-warning mt-4" %>
         </div>
       </div>
     </div>
