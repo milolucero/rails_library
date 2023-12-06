@@ -22,7 +22,7 @@ class CheckoutController < ApplicationController
 
     @session=Stripe::Checkout::Session.create(
       payment_method_types:["card"],
-      success_url: checkout_success_url,
+      success_url: checkout_pre_success_url,
       cancel_url: checkout_cancel_url,
       mode:"payment",
       line_items: @cart.map do |item|
@@ -75,12 +75,19 @@ class CheckoutController < ApplicationController
     redirect_to @session.url, allow_other_host: true
   end
 
-  def success
+  # This action is used to empty the cart before redirecting to the success page
+  def pre_success
     # Empty cart
     session[:cart] = []
     @cart = session[:cart]
 
     # Add order to database
+
+    # Force a reload of the current resource to ensure the view gets the updated @cart
+    redirect_to checkout_success_path
+  end
+
+  def success
   end
 
   def Cancel

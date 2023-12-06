@@ -24,8 +24,12 @@ class CartController < ApplicationController
     # code to cancel the checkout
   end
 
-  def success
+  def pre_success
     # code to handle successful checkout
+  end
+
+  def success
+    # code to handle the pre_success reload to empty the cart
   end
 
   private
