@@ -25,8 +25,9 @@ Rails.application.routes.draw do
   post "books/add_to_cart", to: "books#add_to_cart", as: "add_to_cart"
   post 'books/update_quantity', to: 'books#update_quantity', as: 'update_quantity'
   delete "books/remove_from_cart", to: "books#remove_from_cart", as: "remove_from_cart"
-  get 'cart/checkout', to: 'cart#checkout', as: "checkout"
 
+  # Checkout
+  get "/cart/checkout", to: "checkout#index", as: "checkout"
   scope '/checkout' do
     post 'create',      to: 'checkout#create',      as: 'checkout_create'
     get  'cancel',      to: 'checkout#cancel',      as: 'checkout_cancel'

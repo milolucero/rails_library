@@ -1,4 +1,13 @@
 class CheckoutController < ApplicationController
+  def index
+    @province = Province.find(current_user.province_id)
+    @total_pst = @province.pst * @cart_subtotal
+    @total_gst = @province.gst * @cart_subtotal
+    @total_hst = @province.hst * @cart_subtotal
+    @total_taxes = @total_pst + @total_gst + @total_hst
+    @cart_total = @cart_subtotal + @total_taxes
+  end
+
   def create
     # Only used on the Pay button as a hidden field to send product data
     # @product = Product.find(params[:product_id])
@@ -20,6 +29,7 @@ class CheckoutController < ApplicationController
     @total_taxes = @total_pst + @total_gst + @total_hst
     @cart_total = @cart_subtotal + @total_taxes
 
+    # Create Stripe session
     @session=Stripe::Checkout::Session.create(
       payment_method_types:["card"],
       success_url: checkout_pre_success_url,

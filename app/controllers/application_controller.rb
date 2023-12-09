@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :initialize_session
-  before_action :set_variables
   before_action :load_cart
-
+  before_action :set_variables
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   private
@@ -20,6 +19,11 @@ class ApplicationController < ActionController::Base
     # @all_categories includes all the columns of the categories table, plus a "book_count" column.
     @all_categories = Category.joins(:books).group("categories.id").select("categories.*, COUNT(books.id) AS book_count").order(:name)
     @publishers = Publisher.all
+    @cart_subtotal = @cart.sum do |item|
+      book = Book.find(item["id"])
+      unit_price = book.is_on_sale ? book.sale_price : book.price
+      item["quantity"] * unit_price
+    end
   end
 
   protected
