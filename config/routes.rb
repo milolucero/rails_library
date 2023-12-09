@@ -41,4 +41,7 @@ Rails.application.routes.draw do
 
   # About & Contact pages
   get "pages/:slug", to: 'pages#show', as: 'regular_page'
+
+  # Users
+  resource :user, only: [:update]
 end

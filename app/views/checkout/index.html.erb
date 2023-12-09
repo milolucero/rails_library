@@ -21,18 +21,20 @@
             <div class="is-size-6">Subtotal (<%= pluralize(@cart_item_count, 'item') %>)</div>
             <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @cart_subtotal, unit: "$" %></div>
           </div>
-          <div class="is-flex is-justify-content-space-between is-align-items-baseline">
-            <div class="is-size-6">PST (<%= number_to_percentage(@province.pst * 100, precision: 0) %>)</div>
-            <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_pst, unit: "$" %></div>
-          </div>
-          <div class="is-flex is-justify-content-space-between is-align-items-baseline">
-            <div class="is-size-6">GST (<%= number_to_percentage(@province.gst * 100, precision: 0) %>)</div>
-            <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_gst, unit: "$" %></div>
-          </div>
-          <div class="is-flex is-justify-content-space-between is-align-items-baseline">
-            <div class="is-size-6">HST (<%= number_to_percentage(@province.hst * 100, precision: 0) %>)</div>
-            <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_hst, unit: "$" %></div>
-          </div>
+          <% if @province %>
+            <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+              <div class="is-size-6">PST (<%= number_to_percentage(@province.pst * 100, precision: 0) %>)</div>
+              <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_pst, unit: "$" %></div>
+            </div>
+            <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+              <div class="is-size-6">GST (<%= number_to_percentage(@province.gst * 100, precision: 0) %>)</div>
+              <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_gst, unit: "$" %></div>
+            </div>
+            <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+              <div class="is-size-6">HST (<%= number_to_percentage(@province.hst * 100, precision: 0) %>)</div>
+              <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_hst, unit: "$" %></div>
+            </div>
+          <% end %>
           <div class="is-flex is-justify-content-space-between is-align-items-baseline">
             <div class="is-size-6">Shipping</div>
             <div class="is-size-6 has-text-weight-bold">FREE</div>
@@ -42,7 +44,11 @@
             <div class="is-size-4">Total</div>
             <div class="is-size-4 has-text-danger-dark"><%= number_to_currency @cart_total, unit: "$" %></div>
           </div>
-          <%= button_to "Proceed to Payment", checkout_create_path, remote: true, data: { 'turbo': 'false' }, class: "button is-fullwidth is-link is-warning mt-4" %>
+          <% if @order_is_valid %>
+            <%= button_to "Proceed to Payment", checkout_create_path, remote: true, data: { 'turbo': 'false' }, class: "button is-fullwidth is-link is-warning mt-4" %>
+          <% else %>
+            <%= button_to "Proceed to Payment", '#', disabled: true, class: "button is-fullwidth mt-4" %>
+          <% end %>
         </div>
       </div>
     </div>

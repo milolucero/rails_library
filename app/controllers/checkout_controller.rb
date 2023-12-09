@@ -1,33 +1,59 @@
 class CheckoutController < ApplicationController
+  # Ensure the user is authenticated to reach this page
+  before_action :authenticate_user!
+
   def index
-    @province = Province.find(current_user.province_id)
-    @total_pst = @province.pst * @cart_subtotal
-    @total_gst = @province.gst * @cart_subtotal
-    @total_hst = @province.hst * @cart_subtotal
-    @total_taxes = @total_pst + @total_gst + @total_hst
-    @cart_total = @cart_subtotal + @total_taxes
+    @order_is_valid = false
+    @edit_address = false
+
+    # If the user has a province, calculate taxes
+    if current_user.province_id.present?
+      @province = Province.find(current_user.province_id)
+      @total_pst = @province.pst * @cart_subtotal
+      @total_gst = @province.gst * @cart_subtotal
+      @total_hst = @province.hst * @cart_subtotal
+      @total_taxes = @total_pst + @total_gst + @total_hst
+      @cart_total = @cart_subtotal + @total_taxes
+    end
+
+    # If the user has complete shipping details, create the order.
+    if current_user.address.present? && current_user.city.present? && current_user.province.present? && current_user.postal_code.present?
+      # Create a new order
+      @order = current_user.orders.new
+      @order.shipping_address = current_user.address
+      @order.shipping_city = current_user.city
+      @order.shipping_province = @province.name
+      @order.shipping_postal_code = current_user.postal_code
+      @order.status = "Pending"
+      @order.subtotal = @cart_subtotal
+      @order.purchase_gst = 0
+      @order.purchase_pst = 0
+      @order.purchase_hst = 0
+
+      # Save the order
+      if @order.save
+        @order_is_valid = true
+      else
+        flash[:error] = "There was a problem creating your order. Please try again."
+        puts @order.errors.full_messages
+        render :index
+      end
+    end
+  end
+
+  def update_user_address
+
   end
 
   def create
-    # Only used on the Pay button as a hidden field to send product data
-    # @product = Product.find(params[:product_id])
-
     if @cart.empty?
       redirect_to root_path
     end
 
-    # Price calculations
-    @cart_subtotal = @cart.sum do |item|
-      book = Book.find(item["id"])
-      unit_price = book.is_on_sale ? book.sale_price : book.price
-      item["quantity"] * unit_price
-    end
     @province = Province.find(current_user.province_id)
     @total_pst = @province.pst * @cart_subtotal
     @total_gst = @province.gst * @cart_subtotal
     @total_hst = @province.hst * @cart_subtotal
-    @total_taxes = @total_pst + @total_gst + @total_hst
-    @cart_total = @cart_subtotal + @total_taxes
 
     # Create Stripe session
     @session=Stripe::Checkout::Session.create(
