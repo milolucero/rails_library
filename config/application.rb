@@ -10,6 +10,7 @@ module RailsLibrary
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+    ENV["MAPBOX_ACCESS_TOKEN"]="pk.eyJ1Ijoib3JlaWtoIiwiYSI6ImNscHNmMG1tZjAyZzkycW04bXBreTBzajIifQ.DUweQ1Er7lXdxzJnZ_6GEQ"
 
     # Configuration for the application, engines, and railties goes here.
     #
