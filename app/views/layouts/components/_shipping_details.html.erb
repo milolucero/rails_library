@@ -1,0 +1,50 @@
+<div class="card mb-3">
+  <div class="card-content">
+    <div class="media-content">
+      <div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
+        <p class="title is-5 mb-0">Shipping Address</p>
+        <%= button_to "Edit Address", { action: "update_user_address" }, method: :post, class: "button is-ghost" %>
+      </div>
+      <% if !@edit_address && @province.present? && current_user.address.present? && current_user.city.present? && current_user.postal_code.present? %>
+        <div class="notification mb-1">
+          <p class="subtitle is-6 m-0"><%= current_user.first_name %> <%= current_user.last_name %></p>
+          <p class="subtitle is-6 m-0"><%= current_user.address %></p>
+          <p class="subtitle is-6 m-0"><%= current_user.city %>, <%= @province.name %> <%= current_user.postal_code %></p>
+        </div>
+      <% else %>
+        <%= form_with model: current_user, url: { controller: "users", action: "update" }, local: true, class: 'field' do |form| %>
+          <div class="control">
+            <%= form.label :address, class: 'label' %>
+            <%= form.text_field :address, class: 'input' %>
+          </div>
+          <div class="columns mt-2">
+            <div class="column">
+              <div class="control">
+                <%= form.label :city, class: 'label' %>
+                <%= form.text_field :city, class: 'input' %>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <%= form.label :province_id, "Province", class: 'label is-full' %>
+                <div class="control select" style="width: 100%;">
+                  <%= form.collection_select :province_id, Province.all, :id, :name, { prompt: "Select Province" }, { class: 'select is-fullwidth' } %>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="control">
+                <%= form.label :postal_code, class: 'label' %>
+                <%= form.text_field :postal_code, class: 'input' %>
+              </div>
+            </div>
+          </div>
+          <%= form.object.errors.full_messages.join(', ') %>
+          <div class="control is-flex is-justify-content-end">
+            <%= form.submit "Save address", class: 'button is-link is-pulled-right' %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

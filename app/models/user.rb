@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  belongs_to :province
+  belongs_to :province, optional: true
   has_many :reviews
   has_many :books, through: :reviews
   has_many :orders
@@ -35,5 +35,7 @@ class User < ApplicationRecord
 
   # Validation for postal code format
   validates :postal_code,
-            format: { with: /\A[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d\z/i }
+            format: { with: /\A[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d\z/i },
+            allow_nil: true,
+            allow_blank: true
 end

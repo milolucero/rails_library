@@ -1,40 +1,40 @@
 <section class = "section">
-	<div class="container">
-		<h1 class="title">Shopping Cart</h1>
-		<% if @cart.empty? %>
-			<div class="notification is-link is-light has-text-centered pb-5">
-				<span class="" style="font-size: 4rem;">
-					<i class="fa-regular fa-paper-plane"></i>
-				</span>
-				<p class="is-size-5 has-text-weight-medium">Your cart is empty</p>
-				<p class="is-size-6">Looks like you haven't added any books to your cart yet.</p>
-				<%= link_to root_path, class: "button is-link mt-3 mb-4" do %>
-					Return Home
-				<% end %>
-			</div>
-		<% else %>
-			<div class="columns">
-				<div class="column">
-					<% @cart.each do |item| %>
-						<%= render partial: "layouts/components/cart_item", locals: { item: item } %>
-					<% end %>
-					<div class="is-flex is-justify-content-end is-align-items-baseline">
-						<div class="has-text-weight-bold is-size-5 pr-4 ">Subtotal (<%= @cart_item_count %> items):</div>
-						<div class="is-size-4 has-text-danger-dark"><%= number_to_currency @cart_total, unit: "$" %></div>
-					</div>
-				</div>
-				<div class="column is-one-fifth">
-					<div class="purchase-info-container p-4">
-						<div class="is-flex is-justify-content-space-between is-align-items-baseline">
-							<div class="is-size-6">Subtotal (<%= @cart_item_count %> items):</div>
-							<div class="is-size-6 has-text-weight-bold"><%= number_to_currency @cart_total, unit: "$" %></div>
-						</div>
-						<%= link_to "#", class: "button is-fullwidth is-link is-warning mt-4" do %>
-							Proceed to Checkout
-						<% end %>
-					</div>
-				</div>
-			</div>
-		<% end %>
-	</div>
+  <div class="container">
+    <h1 class="title">Shopping Cart</h1>
+    <% if @cart.empty? %>
+      <div class="notification is-link is-light has-text-centered pb-5">
+        <span class="" style="font-size: 4rem;">
+          <i class="fa-regular fa-paper-plane"></i>
+        </span>
+        <p class="is-size-5 has-text-weight-medium">Your cart is empty</p>
+        <p class="is-size-6">Looks like you haven't added any books to your cart yet.</p>
+        <%= link_to root_path, class: "button is-link mt-3 mb-4" do %>
+          Return Home
+        <% end %>
+      </div>
+    <% else %>
+      <div class="columns">
+        <div class="column">
+          <% @cart.each do |item| %>
+            <%= render partial: "layouts/components/cart_item", locals: { item: item } %>
+          <% end %>
+          <div class="is-flex is-justify-content-end is-align-items-baseline">
+            <div class="has-text-weight-bold is-size-5 pr-4 ">Subtotal (<%= pluralize(@cart_item_count, 'item') %>):</div>
+            <div class="is-size-4 has-text-danger-dark"><%= number_to_currency @cart_subtotal, unit: "$" %></div>
+          </div>
+        </div>
+        <div class="column is-one-fifth">
+          <div class="purchase-info-container p-4">
+            <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+              <div class="is-size-6">Subtotal (<%= pluralize(@cart_item_count, 'item') %>):</div>
+              <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @cart_subtotal, unit: "$" %></div>
+            </div>
+            <%= link_to checkout_path, class: "button is-fullwidth is-link is-warning mt-4" do %>
+              Proceed to Checkout
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </section>

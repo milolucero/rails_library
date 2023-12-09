@@ -1,0 +1,56 @@
+<div class="container pt-4">
+  <%= link_to "↩ Return to Cart", cart_path %>
+  <h1 class="title mt-2">Checkout</h1>
+  <%# Empty state %>
+  <% if @cart.empty? %>
+    <div class="notification is-danger is-light pb-5">
+      Your cart is empty
+    </div>
+    <%= link_to root_path, class: "button is-link mt-3 mb-4" do %>
+      Return Home
+    <% end %>
+  <% else %>
+    <div class="columns">
+      <div class="column">
+        <%= render partial: "layouts/components/shipping_details" %>
+        <%= render partial: "layouts/components/cart_summary" %>
+      </div>
+      <div class="column is-one-fifth">
+        <div class="purchase-info-container p-4">
+          <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+            <div class="is-size-6">Subtotal (<%= pluralize(@cart_item_count, 'item') %>)</div>
+            <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @cart_subtotal, unit: "$" %></div>
+          </div>
+          <% if @province %>
+            <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+              <div class="is-size-6">GST (<%= number_to_percentage(@province.gst * 100, precision: 0) %>)</div>
+              <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_gst, unit: "$" %></div>
+            </div>
+            <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+              <div class="is-size-6">PST (<%= number_to_percentage(@province.pst * 100, precision: 0) %>)</div>
+              <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_pst, unit: "$" %></div>
+            </div>
+            <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+              <div class="is-size-6">HST (<%= number_to_percentage(@province.hst * 100, precision: 0) %>)</div>
+              <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_hst, unit: "$" %></div>
+            </div>
+          <% end %>
+          <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+            <div class="is-size-6">Shipping</div>
+            <div class="is-size-6 has-text-weight-bold">FREE</div>
+          </div>
+          <hr class="my-4" style="height:1px;border-width:0;color:#bcbec6;background-color:#bcbec6">
+          <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+            <div class="is-size-4">Total</div>
+            <div class="is-size-4 has-text-danger-dark"><%= number_to_currency @cart_total, unit: "$" %></div>
+          </div>
+          <% if @order_is_valid %>
+            <%= button_to "Proceed to Payment", checkout_create_path, remote: true, data: { 'turbo': 'false' }, class: "button is-fullwidth is-link is-warning mt-4" %>
+          <% else %>
+            <%= button_to "Proceed to Payment", '#', disabled: true, class: "button is-fullwidth mt-4" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

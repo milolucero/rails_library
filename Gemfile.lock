@@ -265,6 +265,7 @@ GEM
     stimulus-rails (1.2.2)
       railties (>= 6.0.0)
     stringio (3.0.8)
+    stripe (10.2.0)
     thor (1.2.2)
     tilt (2.3.0)
     timeout (0.4.0)
@@ -313,6 +314,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  stripe
   turbo-rails
   tzinfo-data
   web-console
