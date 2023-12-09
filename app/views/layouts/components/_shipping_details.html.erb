@@ -17,7 +17,7 @@
             <%= form.label :address, class: 'label' %>
             <%= form.text_field :address, class: 'input' %>
           </div>
-          <div class="columns">
+          <div class="columns mt-2">
             <div class="column">
               <div class="control">
                 <%= form.label :city, class: 'label' %>
@@ -38,8 +38,8 @@
             </div>
           </div>
           <%= form.object.errors.full_messages.join(', ') %>
-          <div class="control">
-            <%= form.submit "Save address", class: 'button is-link' %>
+          <div class="control is-flex is-justify-content-end">
+            <%= form.submit "Save address", class: 'button is-link is-pulled-right' %>
           </div>
         <% end %>
       <% end %>

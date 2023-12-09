@@ -23,12 +23,12 @@
           </div>
           <% if @province %>
             <div class="is-flex is-justify-content-space-between is-align-items-baseline">
-              <div class="is-size-6">PST (<%= number_to_percentage(@province.pst * 100, precision: 0) %>)</div>
-              <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_pst, unit: "$" %></div>
-            </div>
-            <div class="is-flex is-justify-content-space-between is-align-items-baseline">
               <div class="is-size-6">GST (<%= number_to_percentage(@province.gst * 100, precision: 0) %>)</div>
               <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_gst, unit: "$" %></div>
+            </div>
+            <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+              <div class="is-size-6">PST (<%= number_to_percentage(@province.pst * 100, precision: 0) %>)</div>
+              <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @total_pst, unit: "$" %></div>
             </div>
             <div class="is-flex is-justify-content-space-between is-align-items-baseline">
               <div class="is-size-6">HST (<%= number_to_percentage(@province.hst * 100, precision: 0) %>)</div>
