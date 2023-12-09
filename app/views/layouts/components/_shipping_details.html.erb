@@ -25,9 +25,11 @@
               </div>
             </div>
             <div class="column">
-              <div class="control">
-                <%= form.label :province_id, "Province", class: 'label' %>
-                <%= form.collection_select :province_id, Province.all, :id, :name, { prompt: "Select Province" }, { class: 'select is-fullwidth' } %>
+              <div class="field">
+                <%= form.label :province_id, "Province", class: 'label is-full' %>
+                <div class="control select" style="width: 100%;">
+                  <%= form.collection_select :province_id, Province.all, :id, :name, { prompt: "Select Province" }, { class: 'select is-fullwidth' } %>
+                </div>
               </div>
             </div>
             <div class="column">
