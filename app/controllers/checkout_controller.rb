@@ -54,6 +54,9 @@ class CheckoutController < ApplicationController
         status: "Pending"
       )
 
+      # Store the order id into the user's session for referencing it after Stripe processing
+      session[:order_id] = @order.id
+
       # Save the order
       if @order.save
         # Add cart books to book_order
@@ -80,7 +83,7 @@ class CheckoutController < ApplicationController
     # Create Stripe session
     @session=Stripe::Checkout::Session.create(
       payment_method_types:["card"],
-      success_url: checkout_pre_success_url,
+      success_url: checkout_pre_success_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: checkout_cancel_url,
       mode:"payment",
       line_items: @cart.map do |item|
@@ -145,16 +148,31 @@ class CheckoutController < ApplicationController
     session[:cart] = []
     @cart = session[:cart]
 
-    # Add order to database
+    # If the Stripe payment was successful, update the order status to "Paid" and save the Stripe payment id to the database
+    @order = Order.find(session[:order_id])
+    @order.status = "Paid"
+
+    # Retrieve the data from the Stripe API to save the payment_intent_id into the order.
+    @session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    @payment_intent = Stripe::PaymentIntent.retrieve(@session.payment_intent)
+
+    # Print the Stripe data to the console for testing purposes
+    puts @session
+    puts @payment_intent
+
+    @order.stripe_transaction_id = @payment_intent.id
+    @order.save
 
     # Force a reload of the current resource to ensure the view gets the updated @cart
     redirect_to checkout_success_path
   end
 
-  def success
-  end
+  def success; end
 
-  def Cancel
-
+  def cancel
+    # If the Stripe payment was cancelled, update the order staus to "Cancelled".
+    @order = Order.find(session[:order_id])
+    @order.status = "Cancelled"
+    @order.save
   end
 end
