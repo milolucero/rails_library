@@ -1,6 +1,6 @@
 <%# Devise flash messages %>
 <% flash.each do |key, value| %>
-  <div class="notification container mt-4 mb-0 <%= key == 'notice' ? 'is-info' : 'is-danger' %> is-light">
+  <div class="notification container mt-4 mb-0 <%= flash_class(key) %> is-light">
     <button class="delete"></button>
     <%= value %>
   </div>
