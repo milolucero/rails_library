@@ -4,7 +4,9 @@ class CheckoutController < ApplicationController
 
   def index
     @order_is_valid = false
-    @edit_address = false
+    # @edit_address = false
+    @edit_address = session[:edit_address]
+    session[:edit_address] = false
 
     # If the user has a province, calculate taxes
     if current_user.province_id.present?
@@ -109,6 +111,11 @@ class CheckoutController < ApplicationController
     )
 
     redirect_to @session.url, allow_other_host: true
+  end
+
+  def update_user_address
+    session[:edit_address] = true
+    redirect_to action: "index"
   end
 
   # This action is used to empty the cart before redirecting to the success page

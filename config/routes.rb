@@ -27,12 +27,16 @@ Rails.application.routes.draw do
   delete "books/remove_from_cart", to: "books#remove_from_cart", as: "remove_from_cart"
 
   # Checkout
-  get "/cart/checkout", to: "checkout#index", as: "checkout"
+  scope '/cart' do
+    get 'checkout', to: 'checkout#index', as: 'checkout'
+  end
+
   scope '/checkout' do
     post 'create',      to: 'checkout#create',      as: 'checkout_create'
     get  'cancel',      to: 'checkout#cancel',      as: 'checkout_cancel'
     get  'pre_success', to: 'checkout#pre_success', as: 'checkout_pre_success'
     get  'success',     to: 'checkout#success',     as: 'checkout_success'
+    post 'update_user_address', to: 'checkout#update_user_address'
   end
 
   # Categories

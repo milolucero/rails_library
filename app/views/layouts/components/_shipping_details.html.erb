@@ -1,9 +1,12 @@
 <div class="card mb-3">
   <div class="card-content">
     <div class="media-content">
-      <p class="title is-5 mb-4">Shipping Address</p>
+      <div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
+        <p class="title is-5 mb-0">Shipping Address</p>
+        <%= button_to "Edit Address", { action: "update_user_address" }, method: :post, class: "button is-ghost" %>
+      </div>
       <% if !@edit_address && @province.present? && current_user.address.present? && current_user.city.present? && current_user.postal_code.present? %>
-        <div class="notification">
+        <div class="notification mb-1">
           <p class="subtitle is-6 m-0"><%= current_user.first_name %> <%= current_user.last_name %></p>
           <p class="subtitle is-6 m-0"><%= current_user.address %></p>
           <p class="subtitle is-6 m-0"><%= current_user.city %>, <%= @province.name %> <%= current_user.postal_code %></p>
