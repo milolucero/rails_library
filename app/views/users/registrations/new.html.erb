@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="my-6">
-            <h2 class= "subtitle has-text-weight-bold">Address details</h2>
+            <h2 class= "subtitle has-text-weight-bold">Address details <span class="is-size-6 has-text-grey-light">(optional)</span></h2>
             <div class="field">
               <%= f.label :address, class: 'label' %>
               <div class="control has-icons-left">
@@ -91,7 +91,7 @@
             <div class="field">
               <%= f.label :postal_code, class: 'label' %>
               <div class="control has-icons-left">
-                <%= f.text_field :postal_code, class: 'input', autocomplete: "postal-code", placeholder: "R9T3C5" %>
+                <%= f.text_field :postal_code, class: 'input', autocomplete: "postal-code", placeholder: "R9T 3C5" %>
                 <span class="icon is-small is-left">
                   <i class="fa-regular fa-address-card"></i>
                 </span>
