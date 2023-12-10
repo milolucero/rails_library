@@ -3,7 +3,9 @@
     <div class="media-content">
       <div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
         <p class="title is-5 mb-0">Shipping Address</p>
-        <%= button_to "Edit Address", { action: "update_user_address" }, method: :post, class: "button is-ghost" %>
+        <% if !@edit_address %>
+          <%= button_to "Edit Address", { action: "update_user_address" }, method: :post, class: "button is-ghost" %>
+        <% end %>
       </div>
       <% if !@edit_address && @province.present? && current_user.address.present? && current_user.city.present? && current_user.postal_code.present? %>
         <div class="notification mb-1">
