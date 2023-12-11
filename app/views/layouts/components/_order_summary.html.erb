@@ -1,0 +1,32 @@
+<div class="card mb-3">
+  <div class="card-content">
+    <p class="title is-5 mb-3">Order Summary</p>
+    <% @book_orders.each do |book_order| %>
+      <div class="is-flex is-justify-content-space-between">
+        <div>
+          <div class="media mb-0">
+            <div class="media-left">
+              <% if book_order.book.image.present? %>
+                <%= image_tag(book_order.book.image.variant(resize_to_limit: [30, 30]), alt: book_order.book.title) %>
+              <% elsif book_order.book.image_thumbnail.present? %>
+                <%= image_tag(book_order.book.image_thumbnail, size: "30x30", alt: book_order.book.title) %>
+              <% end %>
+            </div>
+            <div class="media-content">
+              <p class="title is-6"><%= book_order.book.title %></p>
+              <p class="subtitle is-6"><%= book_order.book.authors.map { |author| author.name }.join(", ") %></p>
+            </div>
+          </div>
+        </div>
+        <div class="has-text-right">
+          <p class="book-price is-size-6 has-text-weight-bold">
+              <%= number_to_currency(book_order.purchase_price, unit: "$") %>
+          </p>
+          <p>Quantity: <%= book_order.quantity %></p>
+        </div>
+
+      </div>
+      <hr class="my-4" style="height:1px;border-width:0;color:#bcbec6;background-color:#bcbec6">
+    <% end %>
+  </div>
+</div>

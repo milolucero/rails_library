@@ -1,0 +1,29 @@
+<div class="purchase-info-container p-4">
+  <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+    <div class="is-size-6">Subtotal</div>
+    <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @order.subtotal, unit: "$" %></div>
+  </div>
+  <% if current_user.province %>
+    <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+      <div class="is-size-6">GST (<%= number_to_percentage(current_user.province.gst * 100, precision: 0) %>)</div>
+      <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @order.subtotal * @order.purchase_gst, unit: "$" %></div>
+    </div>
+    <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+      <div class="is-size-6">PST (<%= number_to_percentage(current_user.province.pst * 100, precision: 0) %>)</div>
+      <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @order.subtotal * @order.purchase_pst, unit: "$" %></div>
+    </div>
+    <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+      <div class="is-size-6">HST (<%= number_to_percentage(current_user.province.hst * 100, precision: 0) %>)</div>
+      <div class="is-size-6 has-text-weight-bold"><%= number_to_currency @order.subtotal * @order.purchase_hst, unit: "$" %></div>
+    </div>
+  <% end %>
+  <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+    <div class="is-size-6">Shipping</div>
+    <div class="is-size-6 has-text-weight-bold">FREE</div>
+  </div>
+  <hr class="my-4" style="height:1px;border-width:0;color:#bcbec6;background-color:#bcbec6">
+  <div class="is-flex is-justify-content-space-between is-align-items-baseline">
+    <div class="is-size-4">Total</div>
+    <div class="is-size-4 has-text-danger-dark"><%= number_to_currency @order.subtotal * (1 + @order.purchase_gst + @order.purchase_pst+ @order.purchase_hst ) , unit: "$" %></div>
+  </div>
+</div>
