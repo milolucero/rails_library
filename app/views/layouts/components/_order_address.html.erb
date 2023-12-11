@@ -1,0 +1,10 @@
+<div class="card mb-3">
+  <div class="card-content">
+    <p class="title is-5 mb-2">Shipping Address</p>
+      <div class="notification mb-1">
+        <p class="subtitle is-6 m-0"><%= current_user.first_name %> <%= current_user.last_name %></p>
+        <p class="subtitle is-6 m-0"><%= current_user.address %></p>
+        <p class="subtitle is-6 m-0"><%= current_user.city %>, <%= current_user.province.name %>, <%= current_user.postal_code %></p>
+      </div>
+  </div>
+</div>
