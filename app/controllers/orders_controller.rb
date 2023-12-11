@@ -4,7 +4,11 @@ class OrdersController < ApplicationController
   # All orders of the current user
   def index
     @user = current_user
-    @orders = @user.orders.includes(book_orders: :book)
+    @orders = @user.orders.includes(book_orders: :book).order(created_at: :desc).all
+
+    if @orders.empty?
+      flash.now[:alert] = "No orders found for #{current_user.username} yet"
+    end
   end
 
   # Details about the order
