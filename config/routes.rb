@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'orders/index'
+  get 'orders/show'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords',
@@ -48,4 +50,8 @@ Rails.application.routes.draw do
 
   # Users
   resource :user, only: [:update]
+
+  resources :users do
+    resources :orders, only: %i[index show create]
+  end
 end
