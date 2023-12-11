@@ -1,2 +1,17 @@
-<h1>Orders#show</h1>
-<p>Find me in app/views/orders/show.html.erb</p>
+<div class="container pt-4">
+  <%= link_to "↩ Return to Orders", user_orders_path %>
+  <% if @order %>
+    <h1 class="title mt-2">Order # <%= @order.id %> from <%= @order.created_at.strftime('%Y-%m-%d') %> </h1>
+      <div class="columns">
+        <div class="column">
+          <%= render partial: "layouts/components/order_address" %>
+          <%= render partial: "layouts/components/order_summary" %>
+        </div>
+        <div class="column is-one-fifth">
+          <%= render partial: "layouts/components/order_total" %>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+
