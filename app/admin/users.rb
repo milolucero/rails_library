@@ -15,7 +15,7 @@ ActiveAdmin.register User do
     column :city
     column :postal_code
     column :province do |user|
-      user.province.name
+      user.province&.name
     end
     column :address
     actions
@@ -32,7 +32,7 @@ ActiveAdmin.register User do
       row :city
       row :postal_code
       row :province do |user|
-        user.province.name
+        user.province&.name
       end
       row :address
       row :created_at
