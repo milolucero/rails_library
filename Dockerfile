@@ -30,6 +30,10 @@ RUN gem install rails bundler
 # Install gems
 RUN bundle install
 
+# Stripe keys
+ENV PUBLISHABLE_KEY=$PUBLISHABLE_KEY
+ENV SECRET_KEY=$SECRET_KEY
+
 # Add a script to be executed every time the container starts.
 # COPY entrypoint.sh /usr/bin/
 # RUN chmod +x /usr/bin/entrypoint.sh
@@ -38,3 +42,7 @@ EXPOSE 3000
 
 # Start the main process.
 CMD ["rails", "server", "-b", "0.0.0.0"]
+
+# Sample build and run commands
+# docker build -t milolucero/rails_library:1.0 .
+# docker run --env-file .env -it --rm -p 3000:3000 milolucero/rails_library:1.0
