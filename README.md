@@ -21,6 +21,9 @@ Here is the visual representation of the database structure in BookHub. This dia
 
 ## Installation
 
+### Requirements
+- Docker: The application is containerized using Docker. If you don't have Docker installed, you can download it from [here](https://www.docker.com/products/docker-desktop).
+
 To get started with BookHub, follow these simple steps:
 
 1. Clone the repository:
@@ -30,34 +33,28 @@ To get started with BookHub, follow these simple steps:
    cd rails_library
    ```
 
-2. Install dependencies using Bundler:
+2. Build the Docker image:
 
    ```bash
-   bundle install
+   docker build -t rails_library .
    ```
 
-3. Perform database migration:
+3. Create a .env file in the root directory of the project. This file should contain your Stripe keys for the checkout functionality. If you don't have a Stripe account, you can create one for free [here](https://dashboard.stripe.com/register).
+
+   The .env file should follow the format found in the .env-sample file:
 
    ```bash
-   rails db:migrate
+   # Stripe keys
+   PUBLISHABLE_KEY=your_publishable_key
+   SECRET_KEY=your_secret_key
    ```
 
-4. Seed the database with initial data:
+   Replace your_publishable_key and your_secret_key with your actual Stripe keys.
+
+4. Run the Docker container:
 
    ```bash
-   rails db:seed
-   ```
-
-5. Option 1 - Start the Rails server (basic functionality, no Stripe checkout):
-
-   ```bash
-   rails server
-   ```
-
-6. Option 2 - Start the Rails server with Stripe checkout enabled for a test environment:
-
-   ```bash
-   PUBLISHABLE_KEY=your_stripe_public_key SECRET_KEY=your_stripe_secret_key rails server
+   docker run --env-file .env -it --rm -p 3000:3000 rails_library
    ```
 
 Once the server is up and running, you can access BookHub by visiting [http://localhost:3000](http://localhost:3000) in your web browser.
