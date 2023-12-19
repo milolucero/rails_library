@@ -1,23 +1,24 @@
 # Dockerfile.rails
-FROM ruby:3.1.2 AS rails-toolbox
+FROM ruby:3.1.4-alpine3.18 AS rails-toolbox
 
 # Default directory
 WORKDIR /app
 
 COPY . .
 
-RUN apt-get update
-# RUN apt-get upgrade -y
+RUN apk update
 
 # Install other dependencies
-RUN apt-get install -y zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev libffi-dev libpq-dev
+RUN apk add zlib-dev build-base openssl-dev readline-dev yaml-dev sqlite-dev sqlite libxml2-dev libxslt-dev curl-dev libffi-dev postgresql-dev
 
 # Install npm and yarn
-RUN apt-get install -y npm
-RUN npm install -y yarn
+RUN apk add --update nodejs npm
+RUN npm install yarn
+
+# Install bash (required for n package)
+RUN apk add bash
 
 # Install Node
-# RUN apt-get install -y nodejs
 RUN npm install -g n
 RUN n 18.13.0
 
